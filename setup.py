@@ -11,11 +11,14 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'Click>=6.0',
-    # TODO: put package requirements here
+    'bigchaindb-common>=0.0.3',
+]
+
+dev_requirements = [
+    'ipdb',
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
 ]
 
 setup(
@@ -55,5 +58,8 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     test_suite='tests',
-    tests_require=test_requirements
+    extras_require={
+        'test': test_requirements,
+        'dev': dev_requirements + test_requirements
+    },
 )
