@@ -140,9 +140,9 @@ def sign(transaction, private_key):
     click.echo(transaction)
 
 
-cli = click.CommandCollection(sources=[spend_group,
-                                       generate_group,
-                                       sign_group])
+main = click.CommandCollection(
+    sources=[spend_group, generate_group, sign_group])
+
 
 if __name__ == '__main__':
-    cli()
+    main()
