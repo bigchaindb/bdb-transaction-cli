@@ -22,30 +22,12 @@ class JsonParamType(click.ParamType):
         return json.loads(value)
 
 
-# TODO: If we can remove those "unnecessary" declarations, we should do so.
-#       Couldn't find anything in the click documentation
 @click.group()
-def spend_group():
+def main():
     pass
 
 
-@click.group()
-def sign_group():
-    pass
-
-
-@click.group()
-def generate_group():
-    pass
-
-
-@generate_group.group('generate')
-def generate_sub_group():
-    """Generate keys, conditions or transactions."""
-    pass
-
-
-@generate_sub_group.command('keys')
+@main.command()
 @click.option('--type', 'key_type', type=click.Choice(['private', 'public']))
 def generate_keys(key_type):
     """Generate a random pair of Ed25519 keys.
@@ -66,7 +48,7 @@ def generate_keys(key_type):
 # TODO:
 #       - There is no way to define weights at this point
 #       - There is no way to generate a deeply nested condition
-@generate_sub_group.command('condition')
+@main.command()
 @click.argument('owner_after', required=True, nargs=-1)
 def generate_condition(owner_after):
     """Generate Cryptoconditions from keys.
@@ -78,7 +60,7 @@ def generate_condition(owner_after):
     click.echo(json.dumps(condition.to_dict()))
 
 
-@generate_sub_group.command()
+@main.command()
 @click.argument('owner_before', nargs=1)
 @click.argument('owner_after', required=True, nargs=-1)
 @click.option('--payload', '-P', required=False, type=JsonParamType(),
@@ -87,7 +69,7 @@ def generate_condition(owner_after):
 #       Instead of taking `owner_after`, this command should just be taking
 #       JSONified conditions from `generate condition` to unify this command
 #       with the future `generate transfer` command.
-def create(owner_before, owner_after, payload):
+def create_tx(owner_before, owner_after, payload):
     """Generate an unsigned `CREATE` transaction.
 
         Generates a `CREATE` transaction that creates an asset from the
@@ -101,7 +83,7 @@ def create(owner_before, owner_after, payload):
     click.echo(transaction)
 
 
-@spend_group.command()
+@main.command()
 @click.argument('transaction', type=JsonParamType())
 @click.argument('condition_id', required=False, type=click.INT, nargs=-1)
 # TODO: option to output JSON list
@@ -122,7 +104,7 @@ def spend(transaction, condition_id):
     click.echo(' '.join(inputs))
 
 
-@sign_group.command()
+@main.command()
 @click.argument('transaction', type=JsonParamType())
 @click.argument('private_key', required=True, nargs=-1)
 def sign(transaction, private_key):
@@ -137,10 +119,6 @@ def sign(transaction, private_key):
     #           - https://github.com/bigchaindb/bigchaindb-common/issues/37
     transaction = Transaction._to_str(transaction.to_dict())
     click.echo(transaction)
-
-
-main = click.CommandCollection(
-    sources=[spend_group, generate_group, sign_group])
 
 
 if __name__ == '__main__':
