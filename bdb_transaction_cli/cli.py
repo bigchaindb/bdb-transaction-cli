@@ -10,8 +10,8 @@ from bigchaindb_common.crypto import generate_key_pair
 from bigchaindb_common.transaction import Transaction, Condition
 
 
-# TODO: Maybe move this into another module
-class DictParamType(click.ParamType):
+class JsonParamType(click.ParamType):
+    """ A cli parameter class that loads JSON """
     name = 'JSON'
 
     def convert(self, value, param, ctx):
@@ -19,8 +19,7 @@ class DictParamType(click.ParamType):
         #       Still we want `json.loads` to visibly fail.
         if value is None:
             return value
-        else:
-            return json.loads(value)
+        return json.loads(value)
 
 
 # TODO: If we can remove those "unnecessary" declarations, we should do so.
@@ -82,7 +81,7 @@ def generate_condition(owner_after):
 @generate_sub_group.command()
 @click.argument('owner_before', nargs=1)
 @click.argument('owner_after', required=True, nargs=-1)
-@click.option('--payload', '-P', required=False, type=DictParamType(),
+@click.option('--payload', '-P', required=False, type=JsonParamType(),
               help='A payload to be included in the transaction.')
 # TODO:
 #       Instead of taking `owner_after`, this command should just be taking
@@ -103,7 +102,7 @@ def create(owner_before, owner_after, payload):
 
 
 @spend_group.command()
-@click.argument('transaction', type=DictParamType())
+@click.argument('transaction', type=JsonParamType())
 @click.argument('condition_id', required=False, type=click.INT, nargs=-1)
 # TODO: option to output JSON list
 def spend(transaction, condition_id):
@@ -124,7 +123,7 @@ def spend(transaction, condition_id):
 
 
 @sign_group.command()
-@click.argument('transaction', type=DictParamType())
+@click.argument('transaction', type=JsonParamType())
 @click.argument('private_key', required=True, nargs=-1)
 def sign(transaction, private_key):
     """Sign a transaction.
