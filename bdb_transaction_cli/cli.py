@@ -3,7 +3,7 @@
 import click
 # NOTE: We have to import this for pyinstaller.
 # FIXME: If this can somehow be removed, with pyinstaller still working. Do so.
-import decimal
+import decimal  # noqa
 import json
 
 from bigchaindb_common.crypto import generate_key_pair
@@ -12,7 +12,7 @@ from bigchaindb_common.transaction import Transaction, Condition
 
 # TODO: Maybe move this into another module
 class DictParamType(click.ParamType):
-    name='JSON'
+    name = 'JSON'
 
     def convert(self, value, param, ctx):
         # NOTE: No try-except in case `value is None`, as it is a valid value.
