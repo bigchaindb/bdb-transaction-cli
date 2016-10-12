@@ -5,6 +5,8 @@ import pdb
 import sys
 from unittest.mock import patch
 
+import pytest
+from bigchaindb_common.exceptions import KeypairMismatchException
 from click.testing import CliRunner
 
 from bdb_transaction_cli import cli
@@ -22,7 +24,7 @@ def invoke_cli(args):
     result = runner.invoke(cli.main, args)
     if result.exit_code != 0:
         print(result.output, file=sys.stderr)
-    assert result.exit_code == 0
+        raise result.exception
     return result.output
 
 
@@ -89,6 +91,28 @@ FFILL2 = {
 }
 
 
+TX1_SIGNED = {
+    'id': '346c094c0c71b51100ad36fcd750d8b3a421a2140fed7e2328c9fba3890f92c0',
+    'transaction': {
+        'conditions': [
+            {'cid': 0, 'condition': COND2['condition'], 'owners_after': [PUB2]}
+        ],
+        'data': None,
+        'fulfillments': [
+            {
+                'fid': 0,
+                'fulfillment': 'cf:4:HvQ3Eg9U6Crw-DFf2v36GaPYsEMLhBSSZEuXNQ6cZFiwk0KzbV5VGZDqZdswCJuDmpekoyuURFsC8oXstE-10hX2Lf8SgAjE6L3DGieHqZL27-ySzFICuBsIgE4x4icE',  # noqa
+                'input': None,
+                'owners_before': [PUB1]
+            }
+        ],
+        'operation': 'CREATE',
+        'timestamp': 42
+    },
+    'version': 1
+}
+
+
 @patch('bigchaindb_common.transaction.gen_timestamp', lambda: 42)
 class TestBdbCli:
     def test_create_tx(self):
@@ -107,6 +131,14 @@ class TestBdbCli:
     def test_generate_keys(self):
         output = invoke_cli(['generate_keys']).rstrip()
         assert output == 'a b'
+
+    def test_sign(self):
+        output = json.loads(invoke_cli(['sign', json.dumps(TX1), PRIV1]))
+        assert output == TX1_SIGNED
+
+    def test_sign_fails(self):
+        with pytest.raises(KeypairMismatchException):
+            invoke_cli(['sign', json.dumps(TX1), PRIV2])
 
 
 # Here we monkey patch pdb to make it work inside click's CliRunner
