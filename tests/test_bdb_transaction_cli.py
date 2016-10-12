@@ -3,7 +3,6 @@
 import json
 import pdb
 import sys
-import unittest
 from unittest.mock import patch
 
 from click.testing import CliRunner
@@ -76,10 +75,10 @@ TX1 = {
 
 
 @patch('bigchaindb_common.transaction.gen_timestamp', lambda: 42)
-class TestBdbCli(unittest.TestCase):
+class TestBdbCli:
     def test_create_tx(self):
         output = json.loads(invoke_cli(['create_tx', PUB1, PUB2]))
-        self.assertEqual(output, TX1)
+        assert output == TX1
 
     def test_generate_condition(self):
         output = json.loads(invoke_cli(['generate_condition', PUB2]))
