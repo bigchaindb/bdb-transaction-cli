@@ -73,6 +73,21 @@ TX1 = {
     'version': 1
 }
 
+FFILL2 = {
+    'fulfillment': {
+        'bitmask': 32,
+        'public_key': PUB2,
+        'signature': None,
+        'type': 'fulfillment',
+        'type_id': 4
+    },
+    'input': {
+        'cid': 0,
+        'txid': TX1['id']
+    },
+    'owners_before': [PUB2]
+}
+
 
 @patch('bigchaindb_common.transaction.gen_timestamp', lambda: 42)
 class TestBdbCli:
@@ -83,6 +98,10 @@ class TestBdbCli:
     def test_generate_condition(self):
         output = json.loads(invoke_cli(['generate_condition', PUB2]))
         assert output == COND2
+
+    def test_spend(self):
+        output = json.loads(invoke_cli(['spend', json.dumps(TX1)]))
+        assert output == FFILL2
 
 
 # Here we monkey patch pdb to make it work inside click's CliRunner
