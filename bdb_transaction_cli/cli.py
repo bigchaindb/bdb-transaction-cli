@@ -67,8 +67,6 @@ def create_tx(owner_before, owner_after, payload):
     """
     transaction = Transaction.create([owner_before], list(owner_after),
                                      payload)
-    # TODO: Use `str`:
-    #           - https://github.com/bigchaindb/bigchaindb-common/issues/37
     transaction = Transaction._to_str(transaction.to_dict())
     click.echo(transaction)
 
