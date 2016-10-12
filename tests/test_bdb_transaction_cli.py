@@ -10,11 +10,11 @@ from click.testing import CliRunner
 from bdb_transaction_cli import cli
 
 
-PUB1 = 'HEAMTn6m366gBJ51PhuZ3t7WiX2GhhqiMfAbEzgvAm2v'
-PRIV1 = '9zcUmfAtdhHhMZNbKPy6RZgzSBb7QruXAZxGeydswBXA'
+PUB1 = '35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF'
+PRIV1 = '3sJ8iqyVE2jJAQiHRKXaHq4arsUPQgVKv3mA4uRKeYG5'
 
-PUB2 = '7YMPkiF1m1mFrEaJbvFF4rS7ExgaL93jvJCx1VhN65AA'
-PRIV2 = '8qhgK24XUNwpSqa8SMQeTYwXYBrJDMchJWSazZ1yp4dm'
+PUB2 = 'EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15'
+PRIV2 = 'HrQWRzMwGfLJHkQsaXMef7beMTV4M5aynK4Xm1roFq5V'
 
 
 def invoke_cli(args):
@@ -40,14 +40,14 @@ COND2 = {
             'type': 'fulfillment',
             'type_id': 4
         },
-        'uri': 'cc:4:20:YS4vLbWV2RJ5ETZj-7R2jadaGsmG24dZ0iGe3B09PLs:96'
+        'uri': 'cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96'
     },
     'owners_after': [PUB2]
 }
 
 
 TX1 = {
-    'id': '223327307af7ed62ab695d1c14332544deb7aa123b0f242108e109267e0daf3d',
+    'id': '346c094c0c71b51100ad36fcd750d8b3a421a2140fed7e2328c9fba3890f92c0',
     'transaction': {
         'conditions': [
             {'cid': 0, 'condition': COND2['condition'], 'owners_after': [PUB2]}
@@ -102,6 +102,15 @@ class TestBdbCli:
     def test_spend(self):
         output = json.loads(invoke_cli(['spend', json.dumps(TX1)]))
         assert output == FFILL2
+
+    @patch('bdb_transaction_cli.cli.generate_key_pair', lambda: ('a', 'b'))
+    def test_generate_keys(self):
+        output = invoke_cli(['generate_keys']).rstrip()
+        assert output == 'a b'
+        output = invoke_cli(['generate_keys', '--type=public']).rstrip()
+        assert output == 'b'
+        output = invoke_cli(['generate_keys', '--type=private']).rstrip()
+        assert output == 'a'
 
 
 # Here we monkey patch pdb to make it work inside click's CliRunner
