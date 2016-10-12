@@ -28,21 +28,14 @@ def main():
 
 
 @main.command()
-@click.option('--type', 'key_type', type=click.Choice(['private', 'public']))
-def generate_keys(key_type):
+def generate_keys():
     """Generate a random pair of Ed25519 keys.
 
         Generates a random Ed25519 key pair separated by a space character.
         First value is the private key, second is the public key.
     """
     private_key, public_key = generate_key_pair()
-
-    if key_type == 'private':
-        click.echo(private_key)
-    elif key_type == 'public':
-        click.echo(public_key)
-    else:
-        click.echo('{} {}'.format(private_key, public_key))
+    click.echo('{} {}'.format(private_key, public_key))
 
 
 # TODO:

@@ -107,10 +107,6 @@ class TestBdbCli:
     def test_generate_keys(self):
         output = invoke_cli(['generate_keys']).rstrip()
         assert output == 'a b'
-        output = invoke_cli(['generate_keys', '--type=public']).rstrip()
-        assert output == 'b'
-        output = invoke_cli(['generate_keys', '--type=private']).rstrip()
-        assert output == 'a'
 
 
 # Here we monkey patch pdb to make it work inside click's CliRunner
