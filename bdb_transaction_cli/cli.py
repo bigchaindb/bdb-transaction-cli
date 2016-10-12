@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import click
-# NOTE: We have to import this for pyinstaller.
-# FIXME: If this can somehow be removed, with pyinstaller still working. Do so.
-import decimal  # noqa
 import json
 
 from bigchaindb_common.crypto import generate_key_pair
