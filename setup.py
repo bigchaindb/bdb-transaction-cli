@@ -24,19 +24,17 @@ test_requirements = [
 setup(
     name='bdb_transaction_cli',
     version='0.1.0',
-    description="A minimal command line tool for create and sign BigchainDB transactions.",
+    description=("A minimal command line tool for create and sign "
+                 "BigchainDB transactions."),
     long_description=readme + '\n\n' + history,
     author="BigchainDB GmbH",
     author_email='dev@bigchaindb.com',
-    url='https://github.com/wrigley/bdb_transaction_cli',
-    packages=[
-        'bdb_transaction_cli',
-    ],
-    package_dir={'bdb_transaction_cli':
-                 'bdb_transaction_cli'},
+    url='https://github.com/bigchaindb/bdb-transaction-cli',
+    packages=['bdb_transaction_cli'],
+    package_dir={'bdb_transaction_cli': 'bdb_transaction_cli'},
     entry_points={
         'console_scripts': [
-            'bdb_transaction_cli=bdb_transaction_cli.cli:main'
+            'bdb=bdb_transaction_cli.__main__:main'
         ]
     },
     include_package_data=True,
