@@ -15,10 +15,11 @@ def main():
 # TODO: env output option
 @main.command()
 def generate_keys():
-    """Generate a random pair of Ed25519 keys.
+    """
+    Generate Ed25519 key pair.
 
-        Generates a random Ed25519 key pair separated by a space character.
-        First value is the private key, second is the public key.
+    Generates a random Ed25519 key pair separated by a space character.
+    First value is the private key, second is the public key.
     """
     private_key, public_key = generate_key_pair()
     click.echo('{} {}'.format(private_key, public_key))
@@ -30,10 +31,11 @@ def generate_keys():
 @main.command()
 @click.argument('owner_after', required=True, nargs=-1)
 def generate_condition(owner_after):
-    """Generate Cryptoconditions from keys.
+    """
+    Generate Cryptoconditions from keys.
 
-        Generates a Ed25119 condition from a OWNER_AFTER or a ThresholdSha256
-        Condition from more than one OWNER_AFTER.
+    Generates a Ed25119 condition from a OWNER_AFTER or a ThresholdSha256
+    Condition from more than one OWNER_AFTER.
     """
     condition = Condition.generate(list(owner_after))
     click.echo(json.dumps(condition.to_dict()))
@@ -49,10 +51,11 @@ def generate_condition(owner_after):
 #       JSONified conditions from `generate condition` to unify this command
 #       with the future `generate transfer` command.
 def create_tx(owner_before, owner_after, payload):
-    """Generate an unsigned `CREATE` transaction.
+    """
+    Generate a `CREATE` transaction.
 
-        Generates a `CREATE` transaction that creates an asset from the
-        OWNER_BEFORE to one or more OWNER_AFTER.
+    Generates a `CREATE` transaction that creates an asset from the
+    OWNER_BEFORE to one or more OWNER_AFTER.
     """
     transaction = Transaction.create([owner_before], list(owner_after),
                                      payload)
@@ -65,11 +68,12 @@ def create_tx(owner_before, owner_after, payload):
 @click.argument('condition_id', required=False, type=click.INT, nargs=-1)
 # TODO: option to output JSON list
 def spend(transaction, condition_id):
-    """Convert a transaction's outputs to inputs.
+    """
+    Convert a transaction's outputs to inputs.
 
-        Converts a TRANSACTION's conditions to signable/spendable fulfillments.
-        Conditions can individually selected by passing one or more
-        CONDITION_ID. Otherwise, all conditions are converted.
+    Convert conditions in TRANSACTION (json) to signable/spendable
+    fulfillments. Conditions can individually selected by passing one or more
+    CONDITION_ID. Otherwise, all conditions are converted.
     """
     transaction = Transaction.from_dict(transaction)
     inputs = transaction.to_inputs(list(condition_id))
@@ -86,10 +90,13 @@ def spend(transaction, condition_id):
 @click.argument('transaction', type=JsonParamType())
 @click.argument('private_key', required=True, nargs=-1)
 def sign(transaction, private_key):
-    """Sign a transaction.
+    """
+    Signs a json transaction.
 
-        Sign a TRANSACTION <json> with one more more PRIVATE_KEY. Only a
-        TRANSACTION using Ed25519 or ThresholdSha256 conditions can be signed.
+    Signs TRANSACTION (json) with one more more PRIVATE_KEY. Only a
+    TRANSACTION using Ed25519 or ThresholdSha256 conditions can be signed.
+
+    Outputs a signed transaction.
     """
     transaction = Transaction.from_dict(transaction)
     transaction = transaction.sign(list(private_key))
