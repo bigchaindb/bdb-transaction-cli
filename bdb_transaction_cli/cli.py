@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import click
 import json
 
@@ -8,12 +6,12 @@ from bigchaindb_common.transaction import Transaction, Condition
 
 
 class JsonParamType(click.ParamType):
-    """ A cli parameter class that loads JSON """
+    """ A Click parameter class that loads JSON """
     name = 'JSON'
 
     def convert(self, value, param, ctx):
-        # NOTE: No try-except in case `value is None`, as it is a valid value.
-        #       Still we want `json.loads` to visibly fail.
+        # No try-except in case `value is None`, as it is a valid value.
+        # Still we want `json.loads` to visibly fail.
         if value is None:
             return value
         return json.loads(value)
@@ -24,6 +22,7 @@ def main():
     pass
 
 
+# TODO: env output option
 @main.command()
 def generate_keys():
     """Generate a random pair of Ed25519 keys.
@@ -85,7 +84,8 @@ def spend(transaction, condition_id):
     transaction = Transaction.from_dict(transaction)
     inputs = transaction.to_inputs(list(condition_id))
     inputs = [json.dumps(i.to_dict()) for i in inputs]
-    # NOTE: We intentionally we don't output a JSON list here, as `transfer`
+    # jsonize
+    # NOTE: We intentiod4dnally we don't output a JSON list here, as `transfer`
     #       accepts this methods output as variadic argument.
     #       To learn more about this, visit:
     #       http://click.pocoo.org/5/arguments/#variadic-arguments
@@ -107,6 +107,9 @@ def sign(transaction, private_key):
     #           - https://github.com/bigchaindb/bigchaindb-common/issues/37
     transaction = Transaction._to_str(transaction.to_dict())
     click.echo(transaction)
+
+
+# TODO: bdb transfer '[.. ffills]' '[.. conditions]' '[payload]'
 
 
 if __name__ == '__main__':
