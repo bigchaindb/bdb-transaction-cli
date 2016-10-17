@@ -56,6 +56,7 @@ def create(node_pubkey, conditions, metadata):
     OWNER_PUBKEY.
     """
     # TODO: user can pass asset
+    # TODO: Fix docstring
     ffill = Fulfillment(Ed25519Fulfillment(public_key=node_pubkey),
                         [node_pubkey])
     conditions = [Condition.from_dict(c) for c in listify(conditions)]
