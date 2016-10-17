@@ -129,8 +129,10 @@ TX1_SIGNED = {
 
 @patch('bigchaindb_common.transaction.gen_timestamp', lambda: 42)
 class TestBdbCli:
+    @patch('bigchaindb_common.transaction.Asset.to_hash',
+           lambda self: ASSET['id'])
     def test_create(self):
-        output = json.loads(invoke_method(['create', PUB1, PUB2]))
+        output = json.loads(invoke_method(['create', PUB1, COND2]))
         assert output == TX1
 
     def test_generate_condition(self):
