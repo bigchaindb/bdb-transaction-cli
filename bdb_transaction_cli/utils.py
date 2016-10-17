@@ -13,3 +13,16 @@ class JsonParamType(click.ParamType):
         if value is None:
             return value
         return json.loads(value)
+
+
+def json_argument(*args, **kwargs):
+    """ Decorator for a JSON command line argument """
+    kwargs['type'] = JsonParamType()
+    if 'help' in kwargs:
+        del kwargs['help']
+    return click.argument(*args, **kwargs)
+
+
+def listify(obj):
+    """ Wrap something in a list, if its not already a list """
+    return obj if isinstance(obj, list) else [obj]

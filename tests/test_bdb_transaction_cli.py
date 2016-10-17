@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import copy
 import json
 import pdb
 import sys
@@ -19,7 +20,9 @@ PUB2 = 'EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15'
 PRIV2 = 'HrQWRzMwGfLJHkQsaXMef7beMTV4M5aynK4Xm1roFq5V'
 
 
-def invoke_cli(args):
+def invoke_method(args):
+    args = [json.dumps(arg) if type(arg) in (dict, list)
+            else arg for arg in args]
     runner = CliRunner()
     result = runner.invoke(cli.main, args)
     if result.exit_code != 0:
@@ -29,11 +32,12 @@ def invoke_cli(args):
 
 
 def test_command_line_interface():
-    output = invoke_cli([])
+    output = invoke_method([])
     assert output.startswith('Usage:')
 
 
 COND2 = {
+    'amount': 1,
     'condition': {
         'details': {
             'bitmask': 32,
@@ -47,14 +51,25 @@ COND2 = {
     'owners_after': [PUB2]
 }
 
+COND2_WITH_ID = copy.copy(COND2)
+COND2_WITH_ID['cid'] = 0
+
+
+ASSET = {
+    "id": "cab78dc6-1cb2-4bc0-8ec2-267dedb5fa0f",
+    "data": None,
+    "updatable": False,
+    "divisible": False,
+    "refillable": False
+}
+
 
 TX1 = {
-    'id': '346c094c0c71b51100ad36fcd750d8b3a421a2140fed7e2328c9fba3890f92c0',
+    'id': 'db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99',
     'transaction': {
-        'conditions': [
-            {'cid': 0, 'condition': COND2['condition'], 'owners_after': [PUB2]}
-        ],
-        'data': None,
+        'conditions': [COND2_WITH_ID],
+        'metadata': None,
+        "asset": ASSET,
         'fulfillments': [
             {
                 'fid': 0,
@@ -92,16 +107,15 @@ FFILL2 = {
 
 
 TX1_SIGNED = {
-    'id': '346c094c0c71b51100ad36fcd750d8b3a421a2140fed7e2328c9fba3890f92c0',
+    'id': 'db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99',
     'transaction': {
-        'conditions': [
-            {'cid': 0, 'condition': COND2['condition'], 'owners_after': [PUB2]}
-        ],
-        'data': None,
+        'conditions': [COND2_WITH_ID],
+        'metadata': None,
+        "asset": ASSET,
         'fulfillments': [
             {
                 'fid': 0,
-                'fulfillment': 'cf:4:HvQ3Eg9U6Crw-DFf2v36GaPYsEMLhBSSZEuXNQ6cZFiwk0KzbV5VGZDqZdswCJuDmpekoyuURFsC8oXstE-10hX2Lf8SgAjE6L3DGieHqZL27-ySzFICuBsIgE4x4icE',  # noqa
+                'fulfillment': 'cf:4:HvQ3Eg9U6Crw-DFf2v36GaPYsEMLhBSSZEuXNQ6cZFhFiCQyFc_LY90Wcqoli3lvBmHctwZJQ6rlBt5tt83M32x7PNiWQ-agikVpij3i1xPI8tikeQuIdoaBzhaU-mEH',  # noqa
                 'input': None,
                 'owners_before': [PUB1]
             }
@@ -115,30 +129,35 @@ TX1_SIGNED = {
 
 @patch('bigchaindb_common.transaction.gen_timestamp', lambda: 42)
 class TestBdbCli:
-    def test_create_tx(self):
-        output = json.loads(invoke_cli(['create_tx', PUB1, PUB2]))
+    def test_create(self):
+        output = json.loads(invoke_method(['create', PUB1, PUB2]))
         assert output == TX1
 
     def test_generate_condition(self):
-        output = json.loads(invoke_cli(['generate_condition', PUB2]))
+        output = json.loads(invoke_method(['generate_condition', PUB2]))
         assert output == COND2
 
     def test_spend(self):
-        output = json.loads(invoke_cli(['spend', json.dumps(TX1)]))
+        output = json.loads(invoke_method(['spend', TX1]))
         assert output == FFILL2
 
     @patch('bdb_transaction_cli.cli.generate_key_pair', lambda: ('a', 'b'))
     def test_generate_keys(self):
-        output = invoke_cli(['generate_keys']).rstrip()
+        output = invoke_method(['generate_keys']).rstrip()
         assert output == 'a b'
 
     def test_sign(self):
-        output = json.loads(invoke_cli(['sign', json.dumps(TX1), PRIV1]))
+        output = json.loads(invoke_method(['sign', TX1, PRIV1]))
         assert output == TX1_SIGNED
 
     def test_sign_fails(self):
         with pytest.raises(KeypairMismatchException):
-            invoke_cli(['sign', json.dumps(TX1), PRIV2])
+            invoke_method(['sign', TX1, PRIV2])
+
+    def test_transfer(self):
+        args = ['transfer', [FFILL2], COND2, '{}']
+        output = json.loads(invoke_method(args))
+        assert output == NotImplemented
 
 
 # Here we monkey patch pdb to make it work inside click's CliRunner

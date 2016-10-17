@@ -2,9 +2,10 @@ import click
 import json
 
 from bigchaindb_common.crypto import generate_key_pair
-from bigchaindb_common.transaction import Transaction, Condition
+from bigchaindb_common.transaction import Transaction, \
+    Condition, Fulfillment, Metadata, Asset
 
-from bdb_transaction_cli.utils import JsonParamType
+from bdb_transaction_cli.utils import json_argument, listify
 
 
 @click.group()
@@ -42,30 +43,32 @@ def generate_condition(owner_after):
 
 
 @main.command()
-@click.argument('owner_before', nargs=1)
-@click.argument('owner_after', required=True, nargs=-1)
-@click.option('--payload', '-P', required=False, type=JsonParamType(),
-              help='A payload to be included in the transaction.')
+@click.argument('node_pubkey')
+@click.argument('owner_pubkeys', required=True)
+@json_argument('metadata', '-m', required=False,
+               help='Metadata to be included in the transaction.')
 # TODO:
 #       Instead of taking `owner_after`, this command should just be taking
 #       JSONified conditions from `generate condition` to unify this command
 #       with the future `generate transfer` command.
-def create_tx(owner_before, owner_after, payload):
+def create(node_pubkey, owner_pubkeys, metadata):
     """
     Generate a `CREATE` transaction.
 
-    Generates a `CREATE` transaction that creates an asset from the
-    OWNER_BEFORE to one or more OWNER_AFTER.
+    Generates a `CREATE` transaction that creates an asset, to be signed
+    off by the federation node having NODE_PUBKEY and to be owned by
+    OWNER_PUBKEY.
     """
-    transaction = Transaction.create([owner_before], list(owner_after),
-                                     payload)
+    transaction = Transaction.create(listify(node_pubkey),
+                                     listify(owner_pubkeys),
+                                     metadata)
     transaction = Transaction._to_str(transaction.to_dict())
     click.echo(transaction)
 
 
 @main.command()
-@click.argument('transaction', type=JsonParamType())
-@click.argument('condition_id', required=False, type=click.INT, nargs=-1)
+@json_argument('transaction')
+@click.argument('condition_id', required=False, type=click.INT)
 # TODO: option to output JSON list
 def spend(transaction, condition_id):
     """
@@ -87,7 +90,7 @@ def spend(transaction, condition_id):
 
 
 @main.command()
-@click.argument('transaction', type=JsonParamType())
+@json_argument('transaction')
 @click.argument('private_key', required=True, nargs=-1)
 def sign(transaction, private_key):
     """
@@ -100,10 +103,25 @@ def sign(transaction, private_key):
     """
     transaction = Transaction.from_dict(transaction)
     transaction = transaction.sign(list(private_key))
-    # TODO: Use `str`:
-    #           - https://github.com/bigchaindb/bigchaindb-common/issues/37
     transaction = Transaction._to_str(transaction.to_dict())
     click.echo(transaction)
 
 
-# TODO: bdb transfer '[.. ffills]' '[.. conditions]' '[payload]'
+@main.command()
+@json_argument('fulfillments')
+@json_argument('conditions')
+@json_argument('asset')
+@json_argument('metadata', required=False)
+def transfer(fulfillments, conditions, asset, metadata):
+    """
+    Generate a TRANSFER transaction.
+    """
+    tx = Transaction(Transaction.TRANSFER,
+                     asset=Asset(asset),
+                     metadata=Metadata(metadata))
+    for f in listify(fulfillments):
+        tx.add_fulfillment(Fulfillment.from_dict(f))
+    print(conditions)
+    for c in listify(conditions):
+        tx.add_condition(Condition.from_dict(c))
+    print(Transaction._to_str(tx.to_dict()))
