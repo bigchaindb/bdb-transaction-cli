@@ -64,7 +64,7 @@ ASSET = {
 }
 
 
-TX1 = {
+TX_CREATE = {
     'id': 'db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99',
     'transaction': {
         'conditions': [COND2_WITH_ID],
@@ -100,13 +100,16 @@ FFILL2 = {
     },
     'input': {
         'cid': 0,
-        'txid': TX1['id']
+        'txid': TX_CREATE['id']
     },
     'owners_before': [PUB2]
 }
 
+FFILL2_WITH_ID = copy.copy(FFILL2)
+FFILL2_WITH_ID['fid'] = 0
 
-TX1_SIGNED = {
+
+TX_CREATE_SIGNED = {
     'id': 'db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99',
     'transaction': {
         'conditions': [COND2_WITH_ID],
@@ -127,24 +130,37 @@ TX1_SIGNED = {
 }
 
 
+TX_TRANSFER = {
+    "id": "a86830c6685df71a882c678fe856e44f1a5afdf86483a50c746236cf4c92d050",
+    "version": 1,
+    "transaction": {
+        "operation": "TRANSFER",
+        "conditions": [COND2_WITH_ID],
+        "fulfillments": [FFILL2_WITH_ID],
+        "asset": {"id": ASSET['id']},
+        "metadata": None,
+        "timestamp": 42
+    }
+}
+
+
 @patch('bigchaindb_common.transaction.gen_timestamp', lambda: 42)
+@patch('bigchaindb_common.transaction.Asset.to_hash', lambda self: ASSET['id'])
 class TestBdbCli:
-    @patch('bigchaindb_common.transaction.Asset.to_hash',
-           lambda self: ASSET['id'])
     def test_create(self):
         output = json.loads(invoke_method(['create', PUB1, COND2]))
-        assert output == TX1
+        assert output == TX_CREATE
 
     def test_generate_condition(self):
         output = json.loads(invoke_method(['generate_condition', PUB2]))
         assert output == COND2
 
     def test_spend(self):
-        output = json.loads(invoke_method(['spend', TX1]))
+        output = json.loads(invoke_method(['spend', TX_CREATE]))
         assert output == [FFILL2]
 
     def test_spend_with_condition_ids(self):
-        output = json.loads(invoke_method(['spend', TX1, '[0]']))
+        output = json.loads(invoke_method(['spend', TX_CREATE, '[0]']))
         assert output == [FFILL2]
 
     @patch('bdb_transaction_cli.cli.generate_key_pair', lambda: ('a', 'b'))
@@ -153,17 +169,17 @@ class TestBdbCli:
         assert output == 'a b'
 
     def test_sign(self):
-        output = json.loads(invoke_method(['sign', TX1, PRIV1]))
-        assert output == TX1_SIGNED
+        output = json.loads(invoke_method(['sign', TX_CREATE, PRIV1]))
+        assert output == TX_CREATE_SIGNED
 
     def test_sign_fails(self):
         with pytest.raises(KeypairMismatchException):
-            invoke_method(['sign', TX1, PRIV2])
+            invoke_method(['sign', TX_CREATE, PRIV2])
 
     def test_transfer(self):
         args = ['transfer', [FFILL2], COND2, '{}']
         output = json.loads(invoke_method(args))
-        assert output == NotImplemented
+        assert output == TX_TRANSFER
 
 
 # Here we monkey patch pdb to make it work inside click's CliRunner

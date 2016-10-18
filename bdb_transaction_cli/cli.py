@@ -111,7 +111,6 @@ def transfer(fulfillments, conditions, asset, metadata):
                      metadata=Metadata(metadata))
     for f in listify(fulfillments):
         tx.add_fulfillment(Fulfillment.from_dict(f))
-    print(conditions)
     for c in listify(conditions):
         tx.add_condition(Condition.from_dict(c))
-    print(Transaction._to_str(tx.to_dict()))
+    click.echo(Transaction._to_str(tx.to_dict()))
