@@ -5,7 +5,7 @@ from bigchaindb_common.crypto import generate_key_pair
 from bigchaindb_common.transaction import Transaction, \
     Condition, Fulfillment, Metadata, Asset, Ed25519Fulfillment
 
-from bdb_transaction_cli.utils import json_argument, listify
+from bdb_transaction_cli.utils import json_argument, json_option, listify
 
 
 @click.group()
@@ -45,24 +45,19 @@ def generate_condition(owner_after):
 
 
 @main.command()
-@click.argument('node_pubkey')
-@json_argument('conditions', required=True)
-@json_argument('metadata', '-m', required=False,
-               help='Metadata to be included in the transaction.')
-def create(node_pubkey, conditions, metadata):
+@click.argument('author_pubkey')
+@json_argument('conditions')
+@json_option('--metadata')
+@json_option('--asset')
+def create(author_pubkey, conditions, metadata, asset):
     """
     Generate a `CREATE` transaction.
-
-    Generates a `CREATE` transaction that creates an asset, to be signed
-    off by the federation node having NODE_PUBKEY and to be owned by
-    OWNER_PUBKEY.
     """
-    # TODO: user can pass asset
-    # TODO: Fix docstring
-    ffill = Fulfillment(Ed25519Fulfillment(public_key=node_pubkey),
-                        [node_pubkey])
+    ffill = Fulfillment(Ed25519Fulfillment(public_key=author_pubkey),
+                        [author_pubkey])
     conditions = [Condition.from_dict(c) for c in listify(conditions)]
-    tx = Transaction(Transaction.CREATE, None, [ffill],
+    asset = asset and Asset.from_dict(asset)
+    tx = Transaction(Transaction.CREATE, asset, [ffill],
                      conditions, metadata)
     tx = Transaction._to_str(tx.to_dict())
     click.echo(tx)

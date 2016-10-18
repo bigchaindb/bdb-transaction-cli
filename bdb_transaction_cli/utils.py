@@ -23,6 +23,14 @@ def json_argument(*args, **kwargs):
     return click.argument(*args, **kwargs)
 
 
+def json_option(*args, **kwargs):
+    """ Decorator for a JSON command line option """
+    kwargs['type'] = JsonParamType()
+    if 'help' in kwargs:
+        del kwargs['help']
+    return click.option(*args, **kwargs)
+
+
 def listify(obj):
     """ Wrap something in a list, if its not already a list """
     return obj if isinstance(obj, list) else [obj]

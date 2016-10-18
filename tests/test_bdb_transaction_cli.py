@@ -152,6 +152,13 @@ class TestBdbCli:
         output = json.loads(invoke_method(['create', PUB1, COND2]))
         assert output == TX_CREATE
 
+    def test_create_with_asset(self):
+        asset = {'id': 'a', 'data': {'b': 1}, 'updatable': True,
+                 'divisible': False, 'refillable': False}
+        asset_arg = '--asset=' + json.dumps(asset)
+        output = json.loads(invoke_method(['create', PUB1, COND2, asset_arg]))
+        assert output['transaction']['asset'] == asset
+
     def test_generate_condition(self):
         output = json.loads(invoke_method(['generate_condition', PUB2]))
         assert output == COND2
