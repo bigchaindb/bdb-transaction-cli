@@ -146,6 +146,7 @@ TX_TRANSFER = {
 
 @patch('bigchaindb_common.transaction.gen_timestamp', lambda: 42)
 @patch('bigchaindb_common.transaction.Asset.to_hash', lambda self: ASSET['id'])
+@patch('bdb_transaction_cli.cli.generate_key_pair', lambda: ('b', 'a'))
 class TestBdbCli:
     def test_create(self):
         output = json.loads(invoke_method(['create', PUB1, COND2]))
@@ -163,10 +164,13 @@ class TestBdbCli:
         output = json.loads(invoke_method(['spend', TX_CREATE, '[0]']))
         assert output == [FFILL2]
 
-    @patch('bdb_transaction_cli.cli.generate_key_pair', lambda: ('a', 'b'))
     def test_generate_keys(self):
         output = invoke_method(['generate_keys']).rstrip()
         assert output == 'a b'
+
+    def test_generate_keys_with_name(self):
+        output = invoke_method(['generate_keys', '--name=bob']).rstrip()
+        assert output == 'bob_pub=a bob_priv=b'
 
     def test_sign(self):
         output = json.loads(invoke_method(['sign', TX_CREATE, PRIV1]))

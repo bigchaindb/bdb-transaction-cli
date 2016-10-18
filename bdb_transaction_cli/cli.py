@@ -13,17 +13,22 @@ def main():
     pass
 
 
-# TODO: env output option
 @main.command()
-def generate_keys():
+@click.option('--name', required=False, help=(
+    "Print the keys as shell variables,                             eg: "
+    "`export $(bdb generate_keys --name=bob)`"))
+def generate_keys(name):
     """
     Generate Ed25519 key pair.
 
     Generates a random Ed25519 key pair separated by a space character.
     First value is the private key, second is the public key.
     """
-    private_key, public_key = generate_key_pair()
-    click.echo('{} {}'.format(private_key, public_key))
+    priv, pub = generate_key_pair()
+    fmt = '{pub} {priv}'
+    if name:
+        fmt = '{name}_pub={pub} {name}_priv={priv}'
+    click.echo(fmt.format(name=name, pub=pub, priv=priv))
 
 
 @main.command()
