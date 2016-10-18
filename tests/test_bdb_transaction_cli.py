@@ -141,7 +141,11 @@ class TestBdbCli:
 
     def test_spend(self):
         output = json.loads(invoke_method(['spend', TX1]))
-        assert output == FFILL2
+        assert output == [FFILL2]
+
+    def test_spend_with_condition_ids(self):
+        output = json.loads(invoke_method(['spend', TX1, '[0]']))
+        assert output == [FFILL2]
 
     @patch('bdb_transaction_cli.cli.generate_key_pair', lambda: ('a', 'b'))
     def test_generate_keys(self):

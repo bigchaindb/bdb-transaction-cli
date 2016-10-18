@@ -26,9 +26,6 @@ def generate_keys():
     click.echo('{} {}'.format(private_key, public_key))
 
 
-# TODO:
-#       - There is no way to define weights at this point
-#       - There is no way to generate a deeply nested condition
 @main.command()
 @click.argument('owner_after', required=True, nargs=-1)
 def generate_condition(owner_after):
@@ -68,8 +65,7 @@ def create(node_pubkey, conditions, metadata):
 
 @main.command()
 @json_argument('transaction')
-@click.argument('condition_id', required=False, type=click.INT)
-# TODO: option to output JSON list
+@json_argument('condition_id', required=False)
 def spend(transaction, condition_id):
     """
     Convert a transaction's outputs to inputs.
@@ -79,14 +75,8 @@ def spend(transaction, condition_id):
     CONDITION_ID. Otherwise, all conditions are converted.
     """
     transaction = Transaction.from_dict(transaction)
-    inputs = transaction.to_inputs(list(condition_id))
-    inputs = [json.dumps(i.to_dict()) for i in inputs]
-    # jsonize
-    # NOTE: We intentiod4dnally we don't output a JSON list here, as `transfer`
-    #       accepts this methods output as variadic argument.
-    #       To learn more about this, visit:
-    #       http://click.pocoo.org/5/arguments/#variadic-arguments
-    click.echo(' '.join(inputs))
+    inputs = transaction.to_inputs(condition_id)
+    click.echo(json.dumps([i.to_dict() for i in inputs]))
 
 
 @main.command()
