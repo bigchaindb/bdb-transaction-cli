@@ -22,7 +22,7 @@ def generate_keys(name):
     Generate Ed25519 key pair.
 
     Generates a random Ed25519 key pair separated by a space character.
-    First value is the private key, second is the public key.
+    First value is the public key, second is the private key.
     """
     priv, pub = generate_key_pair()
     fmt = '{pub} {priv}'
@@ -35,7 +35,7 @@ def generate_keys(name):
 @click.argument('owner_after', required=True, nargs=-1)
 def generate_condition(owner_after):
     """
-    Generate Cryptoconditions from keys.
+    Generate cryptoconditions from keys.
 
     Generates a Ed25119 condition from a OWNER_AFTER or a ThresholdSha256
     Condition from more than one OWNER_AFTER.
@@ -51,7 +51,9 @@ def generate_condition(owner_after):
 @json_option('--asset')
 def create(author_pubkey, conditions, metadata, asset):
     """
-    Generate a `CREATE` transaction.
+    Generate a CREATE transaction.
+
+    The CREATE transaction creates a new asset.
     """
     ffill = Fulfillment(Ed25519Fulfillment(public_key=author_pubkey),
                         [author_pubkey])
@@ -72,7 +74,7 @@ def spend(transaction, condition_id):
 
     Convert conditions in TRANSACTION (json) to signable/spendable
     fulfillments. Conditions can individually selected by passing one or more
-    CONDITION_ID. Otherwise, all conditions are converted.
+    CONDITION_ID, as a JSON list. Otherwise, all conditions are converted.
     """
     transaction = Transaction.from_dict(transaction)
     inputs = transaction.to_inputs(condition_id)
@@ -81,18 +83,18 @@ def spend(transaction, condition_id):
 
 @main.command()
 @json_argument('transaction')
-@click.argument('private_key', required=True, nargs=-1)
+@click.argument('private_key')
 def sign(transaction, private_key):
     """
     Signs a json transaction.
 
-    Signs TRANSACTION (json) with one more more PRIVATE_KEY. Only a
+    Signs TRANSACTION (json) with given PRIVATE_KEY. Only a
     TRANSACTION using Ed25519 or ThresholdSha256 conditions can be signed.
 
     Outputs a signed transaction.
     """
     transaction = Transaction.from_dict(transaction)
-    transaction = transaction.sign(list(private_key))
+    transaction = transaction.sign(list([private_key]))
     transaction = Transaction._to_str(transaction.to_dict())
     click.echo(transaction)
 
@@ -105,6 +107,8 @@ def sign(transaction, private_key):
 def transfer(fulfillments, conditions, asset, metadata):
     """
     Generate a TRANSFER transaction.
+
+    The TRANSFER transaction transfers ownership of a given asset.
     """
     tx = Transaction(Transaction.TRANSFER,
                      asset=Asset(asset),

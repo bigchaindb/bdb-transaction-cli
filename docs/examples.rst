@@ -11,20 +11,20 @@ create
 .. code-block:: shell
 
    $ CONDITIONS='{
-       "owners_after": [
-           "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
-       ],
        "amount": 1,
        "condition": {
-           "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96",
            "details": {
-               "type_id": 4,
-               "type": "fulfillment",
+               "bitmask": 32,
                "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
                "signature": null,
-               "bitmask": 32
-           }
-       }
+               "type": "fulfillment",
+               "type_id": 4
+           },
+           "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+       },
+       "owners_after": [
+           "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
+       ]
    }'
 
 
@@ -38,24 +38,24 @@ create_with_asset
 .. code-block:: shell
 
    $ CONDITIONS='{
-       "owners_after": [
-           "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
-       ],
        "amount": 1,
        "condition": {
-           "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96",
            "details": {
-               "type_id": 4,
-               "type": "fulfillment",
+               "bitmask": 32,
                "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
                "signature": null,
-               "bitmask": 32
-           }
-       }
+               "type": "fulfillment",
+               "type_id": 4
+           },
+           "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+       },
+       "owners_after": [
+           "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
+       ]
    }'
 
 
-   $ bdb create 35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF '$CONDITIONS' --asset={"data": {"b": 1}, "id": "a", "updatable": true, "divisible": false, "refillable": false}
+   $ bdb create 35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF '$CONDITIONS' --asset={"divisible": false, "data": {"b": 1}, "refillable": false, "id": "a", "updatable": true}
 
 
 generate_condition
@@ -95,54 +95,54 @@ get_asset
 .. code-block:: shell
 
    $ TRANSACTION='{
+       "id": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99",
        "transaction": {
-           "fulfillments": [
-               {
-                   "owners_before": [
-                       "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF"
-                   ],
-                   "fid": 0,
-                   "input": null,
-                   "fulfillment": {
-                       "type_id": 4,
-                       "type": "fulfillment",
-                       "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
-                       "signature": null,
-                       "bitmask": 32
-                   }
-               }
-           ],
-           "conditions": [
-               {
-                   "cid": 0,
-                   "owners_after": [
-                       "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
-                   ],
-                   "condition": {
-                       "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96",
-                       "details": {
-                           "type_id": 4,
-                           "type": "fulfillment",
-                           "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-                           "signature": null,
-                           "bitmask": 32
-                       }
-                   },
-                   "amount": 1
-               }
-           ],
            "asset": {
                "data": null,
-               "id": "cab78dc6-1cb2-4bc0-8ec2-267dedb5fa0f",
-               "updatable": false,
                "divisible": false,
-               "refillable": false
+               "id": "cab78dc6-1cb2-4bc0-8ec2-267dedb5fa0f",
+               "refillable": false,
+               "updatable": false
            },
+           "conditions": [
+               {
+                   "amount": 1,
+                   "cid": 0,
+                   "condition": {
+                       "details": {
+                           "bitmask": 32,
+                           "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
+                           "signature": null,
+                           "type": "fulfillment",
+                           "type_id": 4
+                       },
+                       "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+                   },
+                   "owners_after": [
+                       "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
+                   ]
+               }
+           ],
+           "fulfillments": [
+               {
+                   "fid": 0,
+                   "fulfillment": {
+                       "bitmask": 32,
+                       "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
+                       "signature": null,
+                       "type": "fulfillment",
+                       "type_id": 4
+                   },
+                   "input": null,
+                   "owners_before": [
+                       "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF"
+                   ]
+               }
+           ],
            "metadata": null,
            "operation": "CREATE",
            "timestamp": 42
        },
-       "id": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99",
        "version": 1
    }'
 
@@ -157,54 +157,54 @@ sign
 .. code-block:: shell
 
    $ TRANSACTION='{
+       "id": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99",
        "transaction": {
-           "fulfillments": [
-               {
-                   "owners_before": [
-                       "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF"
-                   ],
-                   "fid": 0,
-                   "input": null,
-                   "fulfillment": {
-                       "type_id": 4,
-                       "type": "fulfillment",
-                       "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
-                       "signature": null,
-                       "bitmask": 32
-                   }
-               }
-           ],
-           "conditions": [
-               {
-                   "cid": 0,
-                   "owners_after": [
-                       "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
-                   ],
-                   "condition": {
-                       "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96",
-                       "details": {
-                           "type_id": 4,
-                           "type": "fulfillment",
-                           "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-                           "signature": null,
-                           "bitmask": 32
-                       }
-                   },
-                   "amount": 1
-               }
-           ],
            "asset": {
                "data": null,
-               "id": "cab78dc6-1cb2-4bc0-8ec2-267dedb5fa0f",
-               "updatable": false,
                "divisible": false,
-               "refillable": false
+               "id": "cab78dc6-1cb2-4bc0-8ec2-267dedb5fa0f",
+               "refillable": false,
+               "updatable": false
            },
+           "conditions": [
+               {
+                   "amount": 1,
+                   "cid": 0,
+                   "condition": {
+                       "details": {
+                           "bitmask": 32,
+                           "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
+                           "signature": null,
+                           "type": "fulfillment",
+                           "type_id": 4
+                       },
+                       "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+                   },
+                   "owners_after": [
+                       "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
+                   ]
+               }
+           ],
+           "fulfillments": [
+               {
+                   "fid": 0,
+                   "fulfillment": {
+                       "bitmask": 32,
+                       "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
+                       "signature": null,
+                       "type": "fulfillment",
+                       "type_id": 4
+                   },
+                   "input": null,
+                   "owners_before": [
+                       "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF"
+                   ]
+               }
+           ],
            "metadata": null,
            "operation": "CREATE",
            "timestamp": 42
        },
-       "id": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99",
        "version": 1
    }'
 
@@ -219,54 +219,54 @@ spend
 .. code-block:: shell
 
    $ TRANSACTION='{
+       "id": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99",
        "transaction": {
-           "fulfillments": [
-               {
-                   "owners_before": [
-                       "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF"
-                   ],
-                   "fid": 0,
-                   "input": null,
-                   "fulfillment": {
-                       "type_id": 4,
-                       "type": "fulfillment",
-                       "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
-                       "signature": null,
-                       "bitmask": 32
-                   }
-               }
-           ],
-           "conditions": [
-               {
-                   "cid": 0,
-                   "owners_after": [
-                       "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
-                   ],
-                   "condition": {
-                       "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96",
-                       "details": {
-                           "type_id": 4,
-                           "type": "fulfillment",
-                           "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-                           "signature": null,
-                           "bitmask": 32
-                       }
-                   },
-                   "amount": 1
-               }
-           ],
            "asset": {
                "data": null,
-               "id": "cab78dc6-1cb2-4bc0-8ec2-267dedb5fa0f",
-               "updatable": false,
                "divisible": false,
-               "refillable": false
+               "id": "cab78dc6-1cb2-4bc0-8ec2-267dedb5fa0f",
+               "refillable": false,
+               "updatable": false
            },
+           "conditions": [
+               {
+                   "amount": 1,
+                   "cid": 0,
+                   "condition": {
+                       "details": {
+                           "bitmask": 32,
+                           "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
+                           "signature": null,
+                           "type": "fulfillment",
+                           "type_id": 4
+                       },
+                       "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+                   },
+                   "owners_after": [
+                       "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
+                   ]
+               }
+           ],
+           "fulfillments": [
+               {
+                   "fid": 0,
+                   "fulfillment": {
+                       "bitmask": 32,
+                       "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
+                       "signature": null,
+                       "type": "fulfillment",
+                       "type_id": 4
+                   },
+                   "input": null,
+                   "owners_before": [
+                       "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF"
+                   ]
+               }
+           ],
            "metadata": null,
            "operation": "CREATE",
            "timestamp": 42
        },
-       "id": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99",
        "version": 1
    }'
 
@@ -281,54 +281,54 @@ spend_with_condition_ids
 .. code-block:: shell
 
    $ TRANSACTION='{
+       "id": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99",
        "transaction": {
-           "fulfillments": [
-               {
-                   "owners_before": [
-                       "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF"
-                   ],
-                   "fid": 0,
-                   "input": null,
-                   "fulfillment": {
-                       "type_id": 4,
-                       "type": "fulfillment",
-                       "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
-                       "signature": null,
-                       "bitmask": 32
-                   }
-               }
-           ],
-           "conditions": [
-               {
-                   "cid": 0,
-                   "owners_after": [
-                       "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
-                   ],
-                   "condition": {
-                       "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96",
-                       "details": {
-                           "type_id": 4,
-                           "type": "fulfillment",
-                           "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-                           "signature": null,
-                           "bitmask": 32
-                       }
-                   },
-                   "amount": 1
-               }
-           ],
            "asset": {
                "data": null,
-               "id": "cab78dc6-1cb2-4bc0-8ec2-267dedb5fa0f",
-               "updatable": false,
                "divisible": false,
-               "refillable": false
+               "id": "cab78dc6-1cb2-4bc0-8ec2-267dedb5fa0f",
+               "refillable": false,
+               "updatable": false
            },
+           "conditions": [
+               {
+                   "amount": 1,
+                   "cid": 0,
+                   "condition": {
+                       "details": {
+                           "bitmask": 32,
+                           "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
+                           "signature": null,
+                           "type": "fulfillment",
+                           "type_id": 4
+                       },
+                       "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+                   },
+                   "owners_after": [
+                       "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
+                   ]
+               }
+           ],
+           "fulfillments": [
+               {
+                   "fid": 0,
+                   "fulfillment": {
+                       "bitmask": 32,
+                       "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
+                       "signature": null,
+                       "type": "fulfillment",
+                       "type_id": 4
+                   },
+                   "input": null,
+                   "owners_before": [
+                       "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF"
+                   ]
+               }
+           ],
            "metadata": null,
            "operation": "CREATE",
            "timestamp": 42
        },
-       "id": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99",
        "version": 1
    }'
 
@@ -348,38 +348,38 @@ transfer
 
    $ FULFILLMENTS='[
        {
-           "owners_before": [
-               "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
-           ],
+           "fulfillment": {
+               "bitmask": 32,
+               "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
+               "signature": null,
+               "type": "fulfillment",
+               "type_id": 4
+           },
            "input": {
                "cid": 0,
                "txid": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99"
            },
-           "fulfillment": {
-               "type_id": 4,
-               "type": "fulfillment",
-               "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-               "signature": null,
-               "bitmask": 32
-           }
+           "owners_before": [
+               "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
+           ]
        }
    ]'
 
    $ CONDITIONS='{
-       "owners_after": [
-           "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
-       ],
        "amount": 1,
        "condition": {
-           "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96",
            "details": {
-               "type_id": 4,
-               "type": "fulfillment",
+               "bitmask": 32,
                "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
                "signature": null,
-               "bitmask": 32
-           }
-       }
+               "type": "fulfillment",
+               "type_id": 4
+           },
+           "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+       },
+       "owners_after": [
+           "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
+       ]
    }'
 
    $ ASSET='{}'

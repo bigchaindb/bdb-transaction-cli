@@ -167,7 +167,7 @@ class TestBdbCli:
         var_args = []
         for param, arg in zip(command.params, args[1:]):
             if arg[0] in '[{':
-                body = json.dumps(json.loads(arg), indent=4)
+                body = json.dumps(json.loads(arg), indent=4, sort_keys=True)
                 body = body.replace('\n', '\n   ')
                 stmt = "   $ {}='{}'\n\n".format(param.name.upper(), body)
                 self.doc.write(stmt)
