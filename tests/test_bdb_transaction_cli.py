@@ -141,7 +141,7 @@ class TestBdbCli:
               "auto-generated from the tests.", file=cls.doc)
 
     def invoke_method(self, args):
-        args = [json.dumps(arg) if type(arg) in (dict, list)
+        args = [json.dumps(arg) if isinstance(arg, (dict, list))
                 else arg for arg in args]
         runner = CliRunner()
         result = runner.invoke(cli.main, args)
@@ -159,9 +159,9 @@ class TestBdbCli:
         As the tests are running, this method is rendering each of the calls
         the command line interface into a .rst document.
 
-        It's ugly and hacky but perhaps useful until hand curated usage examples
-        are in place. And it has the benefit that it's correct as long as the
-        tests are working.
+        It's ugly and hacky but perhaps useful until hand curated usage
+        examples are in place. And it has the benefit that it's correct as long
+        as the tests are working.
         """
         import inspect
         test_name = inspect.stack()[2][3][5:]
