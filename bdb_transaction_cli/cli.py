@@ -19,16 +19,14 @@ def main():
     "`export $(bdb generate_keys --name=bob)`"))
 def generate_keys(name):
     """
-    Generate Ed25519 key pair.
-
-    Generates a random Ed25519 key pair separated by a space character.
-    First value is the public key, second is the private key.
+    Generate a random Ed25519 key pair.
     """
     priv, pub = generate_key_pair()
-    fmt = '{pub} {priv}'
     if name:
         fmt = '{name}_pub={pub} {name}_priv={priv}'
-    click.echo(fmt.format(name=name, pub=pub, priv=priv))
+        click.echo(fmt.format(name=name, pub=pub, priv=priv))
+    else:
+        click.echo(json.dumps({'public': pub, 'private': priv}))
 
 
 @main.command()

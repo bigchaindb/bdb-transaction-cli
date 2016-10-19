@@ -217,7 +217,7 @@ class TestBdbCli:
 
     def test_generate_keys(self):
         output = self.invoke_method(['generate_keys']).rstrip()
-        assert output == 'a b'
+        assert json.loads(output) == {'public': 'a', 'private': 'b'}
 
     def test_generate_keys_with_name(self):
         output = self.invoke_method(['generate_keys', '--name=bob']).rstrip()

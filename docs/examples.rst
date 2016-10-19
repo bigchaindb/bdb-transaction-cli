@@ -55,7 +55,7 @@ create_with_asset
    }'
 
 
-   $ bdb create 35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF '$CONDITIONS' --asset={"divisible": false, "data": {"b": 1}, "refillable": false, "id": "a", "updatable": true}
+   $ bdb create 35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF '$CONDITIONS' --asset={"data": {"b": 1}, "divisible": false, "refillable": false, "id": "a", "updatable": true}
 
 
 generate_condition
