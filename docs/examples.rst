@@ -28,7 +28,7 @@ create
    }'
 
 
-   $ bdb create 35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF '$CONDITIONS'
+   $ bdb create 35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF "$CONDITIONS"
 
 
 create_with_asset
@@ -55,7 +55,7 @@ create_with_asset
    }'
 
 
-   $ bdb create 35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF '$CONDITIONS' --asset={"divisible": false, "id": "a", "refillable": false, "data": {"b": 1}, "updatable": true}
+   $ bdb create 35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF "$CONDITIONS" --asset={"updatable": true, "id": "a", "divisible": false, "refillable": false, "data": {"b": 1}}
 
 
 generate_condition
@@ -147,7 +147,7 @@ get_asset
    }'
 
 
-   $ bdb get_asset '$TRANSACTION'
+   $ bdb get_asset "$TRANSACTION"
 
 
 sign
@@ -209,7 +209,7 @@ sign
    }'
 
 
-   $ bdb sign '$TRANSACTION' 3sJ8iqyVE2jJAQiHRKXaHq4arsUPQgVKv3mA4uRKeYG5
+   $ bdb sign "$TRANSACTION" 3sJ8iqyVE2jJAQiHRKXaHq4arsUPQgVKv3mA4uRKeYG5
 
 
 spend
@@ -271,7 +271,7 @@ spend
    }'
 
 
-   $ bdb spend '$TRANSACTION'
+   $ bdb spend "$TRANSACTION"
 
 
 spend_with_condition_ids
@@ -337,7 +337,7 @@ spend_with_condition_ids
    ]'
 
 
-   $ bdb spend '$TRANSACTION' '$CONDITION_ID'
+   $ bdb spend "$TRANSACTION" "$CONDITION_ID"
 
 
 transfer
@@ -385,4 +385,4 @@ transfer
    $ ASSET='{}'
 
 
-   $ bdb transfer '$FULFILLMENTS' '$CONDITIONS' '$ASSET'
+   $ bdb transfer "$FULFILLMENTS" "$CONDITIONS" "$ASSET"

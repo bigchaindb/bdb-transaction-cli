@@ -181,7 +181,7 @@ class TestBdbCli:
                 body = body.replace('\n', '\n   ')
                 stmt = "   $ {}='{}'\n\n".format(param.name.upper(), body)
                 self.doc.write(stmt)
-                var_args.append("'${}'".format(param.name.upper()))
+                var_args.append("\"${}\"".format(param.name.upper()))
             else:
                 var_args.append(arg)
 
