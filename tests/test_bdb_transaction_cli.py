@@ -20,22 +20,6 @@ PUB2 = 'EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15'
 PRIV2 = 'HrQWRzMwGfLJHkQsaXMef7beMTV4M5aynK4Xm1roFq5V'
 
 
-def invoke_method(args):
-    args = [json.dumps(arg) if type(arg) in (dict, list)
-            else arg for arg in args]
-    runner = CliRunner()
-    result = runner.invoke(cli.main, args)
-    if result.exit_code != 0:
-        print(result.output, file=sys.stderr)
-        raise result.exception
-    return result.output
-
-
-def test_command_line_interface():
-    output = invoke_method([])
-    assert output.startswith('Usage:')
-
-
 COND2 = {
     'amount': 1,
     'condition': {
@@ -148,49 +132,104 @@ TX_TRANSFER = {
 @patch('bigchaindb_common.transaction.Asset.to_hash', lambda self: ASSET['id'])
 @patch('bdb_transaction_cli.cli.generate_key_pair', lambda: ('b', 'a'))
 class TestBdbCli:
+    @classmethod
+    def setUpClass(cls):
+        cls.doc = open('docs/examples.rst', 'w')
+        cls.doc.write("Invocation Examples\n")
+        cls.doc.write("===================\n\n")
+        print("These are examples of how to invoke the bdb command, "
+              "auto-generated from the tests.", file=cls.doc)
+
+    def invoke_method(self, args):
+        args = [json.dumps(arg) if type(arg) in (dict, list)
+                else arg for arg in args]
+        runner = CliRunner()
+        result = runner.invoke(cli.main, args)
+        if result.exit_code != 0:
+            print(result.output, file=sys.stderr)
+            raise result.exception
+        if args:
+            self.record(args, result.output)
+        return result.output
+
+    def record(self, args, output):
+        import inspect
+        test_name = inspect.stack()[2][3][5:]
+
+        print('\n\n' + test_name, file=self.doc)
+        print('-' * len(test_name), file=self.doc)
+        self.doc.write('\n\n.. code-block:: shell\n\n')
+
+        command = cli.main.commands[args[0]]
+
+        doc = []
+
+        var_args = []
+        for param, arg in zip(command.params, args[1:]):
+            if arg[0] in '[{':
+                body = json.dumps(json.loads(arg), indent=4)
+                body = body.replace('\n', '\n   ')
+                stmt = "   $ {}='{}'\n\n".format(param.name.upper(), body)
+                self.doc.write(stmt)
+                var_args.append("'${}'".format(param.name.upper()))
+            else:
+                var_args.append(arg)
+
+        self.doc.write('\n   $ bdb {} {}\n'.format(args[0], ' '.join(var_args)))
+
+    def test_usage(self):
+        output = self.invoke_method([])
+        assert output.startswith('Usage:')
+
     def test_create(self):
-        output = json.loads(invoke_method(['create', PUB1, COND2]))
+        output = json.loads(self.invoke_method(['create', PUB1, COND2]))
         assert output == TX_CREATE
 
     def test_create_with_asset(self):
         asset = {'id': 'a', 'data': {'b': 1}, 'updatable': True,
                  'divisible': False, 'refillable': False}
         asset_arg = '--asset=' + json.dumps(asset)
-        output = json.loads(invoke_method(['create', PUB1, COND2, asset_arg]))
+        args = ['create', PUB1, COND2, asset_arg]
+        output = json.loads(self.invoke_method(args))
         assert output['transaction']['asset'] == asset
 
     def test_generate_condition(self):
-        output = json.loads(invoke_method(['generate_condition', PUB2]))
+        output = json.loads(self.invoke_method(['generate_condition', PUB2]))
         assert output == COND2
 
     def test_spend(self):
-        output = json.loads(invoke_method(['spend', TX_CREATE]))
+        output = json.loads(self.invoke_method(['spend', TX_CREATE]))
         assert output == [FFILL2]
 
     def test_spend_with_condition_ids(self):
-        output = json.loads(invoke_method(['spend', TX_CREATE, '[0]']))
+        output = json.loads(self.invoke_method(['spend', TX_CREATE, '[0]']))
         assert output == [FFILL2]
 
     def test_generate_keys(self):
-        output = invoke_method(['generate_keys']).rstrip()
+        output = self.invoke_method(['generate_keys']).rstrip()
         assert output == 'a b'
 
     def test_generate_keys_with_name(self):
-        output = invoke_method(['generate_keys', '--name=bob']).rstrip()
+        output = self.invoke_method(['generate_keys', '--name=bob']).rstrip()
         assert output == 'bob_pub=a bob_priv=b'
 
     def test_sign(self):
-        output = json.loads(invoke_method(['sign', TX_CREATE, PRIV1]))
+        output = json.loads(self.invoke_method(['sign', TX_CREATE, PRIV1]))
         assert output == TX_CREATE_SIGNED
 
     def test_sign_fails(self):
         with pytest.raises(KeypairMismatchException):
-            invoke_method(['sign', TX_CREATE, PRIV2])
+            self.invoke_method(['sign', TX_CREATE, PRIV2])
 
     def test_transfer(self):
         args = ['transfer', [FFILL2], COND2, '{}']
-        output = json.loads(invoke_method(args))
+        output = json.loads(self.invoke_method(args))
         assert output == TX_TRANSFER
+
+    def test_get_asset(self):
+        output = json.loads(self.invoke_method(['get_asset', TX_CREATE]))
+        assert output == {'id': ASSET['id']}
+
 
 
 # Here we monkey patch pdb to make it work inside click's CliRunner

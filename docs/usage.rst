@@ -3,7 +3,7 @@ Usage
 =====
 
 Here is demonstrated how Alice can make two transactions, first to
-create an asset, and then to transfer it to Bob
+create an asset, and then to transfer it to Bob.
 
 Creating an asset
 =================
@@ -29,7 +29,9 @@ to.
 	    condition
 	    pubkey_alice
 	    privkey_alice
-	    pubkey_server
+	    author_pubkey
+            asset [style=dashed]
+            metadata [style=dashed]
 	    CREATE_transaction
 	    signed_transaction
 	}
@@ -38,7 +40,9 @@ to.
 	    pubkey_alice -> generate_condition
 	    generate_condition -> condition
 	    condition -> create
-	    pubkey_server -> create
+	    author_pubkey -> create
+            asset -> create
+            metadata -> create
 	    create -> CREATE_transaction
 	    generate_keys -> pubkey_alice
 	    generate_keys -> privkey_alice
@@ -89,6 +93,8 @@ asset.
 	    generate_condition -> condition
 	    privkey_alice -> sign
 	    CREATE_transaction -> spend
+            CREATE_transaction -> get_asset
+            get_asset -> asset
 	    spend -> fulfillment
 	    TRANSFER_transaction -> sign
 	    sign -> signed_transaction

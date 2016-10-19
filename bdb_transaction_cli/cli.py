@@ -114,3 +114,15 @@ def transfer(fulfillments, conditions, asset, metadata):
     for c in listify(conditions):
         tx.add_condition(Condition.from_dict(c))
     click.echo(Transaction._to_str(tx.to_dict()))
+
+
+@main.command()
+@json_argument('transaction')
+def get_asset(transaction):
+    """
+    Return the asset from a transaction for the purpose of providing as an
+    input to `transfer`.
+    """
+    click.echo(json.dumps({"id": transaction['transaction']['asset']['id']}))
+
+
