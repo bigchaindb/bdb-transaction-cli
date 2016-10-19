@@ -3,7 +3,7 @@ import json
 import click
 
 
-class JsonParamType(click.ParamType):
+class JsonOrNoneParamType(click.ParamType):
     """ A Click parameter class that loads JSON """
     name = 'JSON'
 
@@ -17,13 +17,13 @@ class JsonParamType(click.ParamType):
 
 def json_argument(*args, **kwargs):
     """ Decorator for a JSON command line argument """
-    kwargs['type'] = JsonParamType()
+    kwargs['type'] = JsonOrNoneParamType()
     return click.argument(*args, **kwargs)
 
 
 def json_option(*args, **kwargs):
     """ Decorator for a JSON command line option """
-    kwargs['type'] = JsonParamType()
+    kwargs['type'] = JsonOrNoneParamType()
     return click.option(*args, **kwargs)
 
 

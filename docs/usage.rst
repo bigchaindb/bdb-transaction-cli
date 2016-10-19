@@ -2,8 +2,8 @@
 Usage
 =====
 
-Here is demonstrated how Alice can make two transactions, first to
-create an asset, and then to transfer it to Bob.
+Here we demonstrate how Alice can make two transactions,
+first to create an asset, and then to transfer it to Bob.
 
 Legend:
 
@@ -23,10 +23,6 @@ Creating an asset
 The below diagram shows how to generate a transaction that creates an
 asset.
 
-The required inputs to be able to do this are the public key of the
-validating node (server) that the transaction will be first submitted
-to.
-
 .. graphviz::
 
     digraph CREATE {
@@ -41,7 +37,6 @@ to.
 	    condition
 	    pubkey_alice
 	    privkey_alice
-	    author_pubkey
             asset [style=dashed]
             metadata [style=dashed]
 	    CREATE_transaction
@@ -52,7 +47,7 @@ to.
 	    pubkey_alice -> generate_condition
 	    generate_condition -> condition
 	    condition -> create
-	    author_pubkey -> create
+	    pubkey_alice -> create
             asset -> create
             metadata -> create
 	    create -> CREATE_transaction
