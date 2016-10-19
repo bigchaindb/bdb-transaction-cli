@@ -18,16 +18,12 @@ class JsonParamType(click.ParamType):
 def json_argument(*args, **kwargs):
     """ Decorator for a JSON command line argument """
     kwargs['type'] = JsonParamType()
-    if 'help' in kwargs:
-        del kwargs['help']
     return click.argument(*args, **kwargs)
 
 
 def json_option(*args, **kwargs):
     """ Decorator for a JSON command line option """
     kwargs['type'] = JsonParamType()
-    if 'help' in kwargs:
-        del kwargs['help']
     return click.option(*args, **kwargs)
 
 
