@@ -32,5 +32,5 @@ def json_option(*args, **kwargs):
 
 
 def listify(obj):
-    """ Wrap something in a list, if its not already a list """
+    """ Wrap something in a list, if it's not already a list """
     return obj if isinstance(obj, list) else [obj]

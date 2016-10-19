@@ -25,7 +25,7 @@ test_requirements = [
 setup(
     name='bdb_transaction_cli',
     version='0.1.0',
-    description=("A minimal command line tool for create and sign "
+    description=("A minimal command line tool for creating and signing "
                  "BigchainDB transactions."),
     long_description=readme + '\n\n' + history,
     author="BigchainDB GmbH",

@@ -1,6 +1,6 @@
-import click
 import json
 
+import click
 from bigchaindb_common.crypto import generate_key_pair
 from bigchaindb_common.transaction import Transaction, \
     Condition, Fulfillment, Metadata, Asset, Ed25519Fulfillment
