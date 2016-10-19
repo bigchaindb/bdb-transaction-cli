@@ -153,6 +153,16 @@ class TestBdbCli:
         return result.output
 
     def record(self, args, output):
+        """
+        Here's what's happening.
+
+        As the tests are running, this method is rendering each of the calls
+        the command line interface into a .rst document.
+
+        It's ugly and hacky but perhaps useful until hand curated usage examples
+        are in place. And it has the benefit that it's correct as long as the
+        tests are working.
+        """
         import inspect
         test_name = inspect.stack()[2][3][5:]
 
