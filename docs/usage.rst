@@ -5,6 +5,18 @@ Usage
 Here is demonstrated how Alice can make two transactions, first to
 create an asset, and then to transfer it to Bob.
 
+Legend:
+
+.. graphviz::
+
+    digraph LEGEND {
+	node [fontname="helvetica"];
+        data [label="data" shape=record]
+        opt [label="optional data" shape=record style=dashed]
+        method [label="CLI method" color=red]
+    }
+
+
 Creating an asset
 =================
 
