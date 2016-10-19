@@ -92,7 +92,7 @@ def sign(transaction, private_key):
     Outputs a signed transaction.
     """
     transaction = Transaction.from_dict(transaction)
-    transaction = transaction.sign(list([private_key]))
+    transaction = transaction.sign([private_key])
     transaction = Transaction._to_str(transaction.to_dict())
     click.echo(transaction)
 
@@ -122,9 +122,7 @@ def transfer(fulfillments, conditions, asset, metadata):
 @json_argument('transaction')
 def get_asset(transaction):
     """
-    Return the asset from a transaction for the purpose of providing as an
+    Return the asset from a transaction for the purpose of providing it as an
     input to `transfer`.
     """
     click.echo(json.dumps({"id": transaction['transaction']['asset']['id']}))
-
-
