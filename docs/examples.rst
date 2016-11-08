@@ -54,8 +54,18 @@ create_with_asset
        ]
    }'
 
+   $ METADATA='{
+       "data": {
+           "b": 1
+       },
+       "divisible": false,
+       "id": "a",
+       "refillable": false,
+       "updatable": true
+   }'
 
-   $ bdb create 35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF "$CONDITIONS" --asset={"updatable": true, "id": "a", "divisible": false, "refillable": false, "data": {"b": 1}}
+
+   $ bdb create --asset="$METADATA" 35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF "$CONDITIONS"
 
 
 generate_condition

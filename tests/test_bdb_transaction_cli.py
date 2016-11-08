@@ -176,12 +176,19 @@ class TestBdbCli:
 
         var_args = []
         for param, arg in zip(command.params, args[1:]):
+            opt = None
+            if arg.startswith('--'):
+                opt, arg = arg.split('=', 2)
+
             if arg[0] in '[{':
                 body = json.dumps(json.loads(arg), indent=4, sort_keys=True)
                 body = body.replace('\n', '\n   ')
                 stmt = "   $ {}='{}'\n\n".format(param.name.upper(), body)
                 self.doc.write(stmt)
-                var_args.append("\"${}\"".format(param.name.upper()))
+                arg = "\"${}\"".format(param.name.upper())
+
+            if opt:
+                var_args.insert(0, opt + '=' + arg)
             else:
                 var_args.append(arg)
 
