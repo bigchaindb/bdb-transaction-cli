@@ -57,40 +57,35 @@ If you are proposing a feature:
 Get Started!
 ------------
 
-Ready to contribute? Here's how to set up `bdb_transaction_cli` for local development.
+Ready to contribute? Here's how to set up `bdb-transaction-cli` for local development.
 
-1. Fork the `bdb_transaction_cli` repo on GitHub.
-2. Clone your fork locally::
+1. Fork the `bdb-transaction-cli` repo on GitHub.
 
-    $ git clone git@github.com:your_name_here/bdb_transaction_cli.git
+2. Follow the installation instructions in the README, but instead of checking out the project from the github.com/bigchaindb, do the following::
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
+    $ git clone git@github.com:your_name_here/bdb-transaction-cli.git
 
-    $ mkvirtualenv --python=`which python3` bdb_transaction_cli
-    $ cd bdb_transaction_cli/
-    $ python setup.py develop
-
-4. Create a branch for local development::
+3. Check out a branch for your change::
 
     $ git checkout -b name-of-your-bugfix-or-feature
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and the tests, including testing other Python versions with tox::
+4. When you're done making changes, check that your changes pass flake8 and the tests, including testing other Python versions with tox::
 
-    $ flake8 bdb_transaction_cli tests
+    $ flake8 bdb-transaction-cli tests
     $ python setup.py test or py.test
     $ tox
 
    To get flake8 and tox, just pip install them into your virtualenv.
 
-6. Commit your changes and push your branch to GitHub::
+5. Commit your changes and push your branch to GitHub::
 
     $ git add .
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-7. Submit a pull request through the GitHub website.
+6. Submit a pull request through the GitHub website.
 
 Pull Request Guidelines
 -----------------------
@@ -110,5 +105,5 @@ Tips
 
 To run a subset of tests::
 
-$ py.test tests.test_bdb_transaction_cli
+$ py.test tests.test_bdb-transaction-cli
 

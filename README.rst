@@ -2,27 +2,27 @@
 bdb-transaction-cli
 ===============================
 
-
-.. image:: https://img.shields.io/pypi/v/bdb_transaction_cli.svg
-        :target: https://pypi.python.org/pypi/bdb_transaction_cli
-
-.. image:: https://img.shields.io/travis/wrigley/bdb_transaction_cli.svg
-        :target: https://travis-ci.org/wrigley/bdb_transaction_cli
-
-.. image:: https://readthedocs.org/projects/bdb-transaction-cli/badge/?version=latest
-        :target: https://bdb-transaction-cli.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
-
-.. image:: https://pyup.io/repos/github/wrigley/bdb_transaction_cli/shield.svg
-     :target: https://pyup.io/repos/github/wrigley/bdb_transaction_cli/
-     :alt: Updates
-
-
 A minimal command line tool for create and sign BigchainDB transactions.
 
+Installation
+------------
 
-* Free software: Apache Software License 2.0
-* Documentation: https://bdb-transaction-cli.readthedocs.io.
+In the shell:
+
+.. code:: shell
+
+  # Checkout the project
+  git clone https://github.com/bigchaindb/bdb-transaction-cli/
+  cd bdb-transaction-cli
+
+  # Create python virtual environment and install requirements
+  virtualenv -p `which python3` .env
+  . .env/bin/activate
+  pip install -r requirements_dev.txt
+  
+  # Install the `bdb` executable into the virtual environment
+  python setup.py develop
+
 
 
 Features
