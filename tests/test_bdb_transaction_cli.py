@@ -3,7 +3,9 @@
 import copy
 import json
 import pdb
+import os
 import sys
+import unittest
 from unittest.mock import patch
 
 import pytest
@@ -128,17 +130,21 @@ TX_TRANSFER = {
 }
 
 
+RECORD_EXAMPLES = 'RECORD_EXAMPLES' in os.environ
+
+
 @patch('bigchaindb_common.transaction.gen_timestamp', lambda: 42)
 @patch('bigchaindb_common.transaction.Asset.to_hash', lambda self: ASSET['id'])
 @patch('bdb_transaction_cli.cli.generate_key_pair', lambda: ('b', 'a'))
-class TestBdbCli:
+class TestBdbCli(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.doc = open('docs/examples.rst', 'w')
-        cls.doc.write("Invocation Examples\n")
-        cls.doc.write("===================\n\n")
-        print("These are examples of how to invoke the bdb command, "
-              "auto-generated from the tests.", file=cls.doc)
+        if RECORD_EXAMPLES:
+            cls.doc = open('docs/examples.rst', 'w')
+            cls.doc.write("Invocation Examples\n")
+            cls.doc.write("===================\n\n")
+            print("These are examples of how to invoke the bdb command, "
+                  "auto-generated from the tests.", file=cls.doc)
 
     def invoke_method(self, args):
         args = [json.dumps(arg) if isinstance(arg, (dict, list))
@@ -148,7 +154,7 @@ class TestBdbCli:
         if result.exit_code != 0:
             print(result.output, file=sys.stderr)
             raise result.exception
-        if args:
+        if args and RECORD_EXAMPLES:
             self.record(args, result.output)
         return result.output
 
