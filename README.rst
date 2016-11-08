@@ -28,13 +28,7 @@ A minimal command line tool for create and sign BigchainDB transactions.
 Features
 --------
 
-* TODO
-
-Credits
----------
-
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-
+* Create `CREATE` transactions
+* Create `TRANSFER` transactions
+* Sign transactions
+* Generate key pairs
