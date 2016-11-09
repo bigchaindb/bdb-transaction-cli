@@ -43,18 +43,18 @@ def generate_condition(owner_after):
 
 
 @main.command()
-@click.argument('author_pubkey')
+@click.argument('owner_before')
 @json_argument('conditions')
 @json_option('--metadata')
 @json_option('--asset')
-def create(author_pubkey, conditions, metadata, asset):
+def create(owner_before, conditions, metadata, asset):
     """
     Generate a CREATE transaction.
 
     The CREATE transaction creates a new asset.
     """
-    ffill = Fulfillment(Ed25519Fulfillment(public_key=author_pubkey),
-                        [author_pubkey])
+    ffill = Fulfillment(Ed25519Fulfillment(public_key=owner_before),
+                        [owner_before])
     conditions = [Condition.from_dict(c) for c in listify(conditions)]
     asset = Asset.from_dict(asset) if asset else None
     tx = Transaction(Transaction.CREATE, asset, [ffill],
