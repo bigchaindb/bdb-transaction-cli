@@ -71,8 +71,8 @@ def spend(transaction, condition_id):
     Convert a transaction's outputs to inputs.
 
     Convert conditions in TRANSACTION (json) to signable/spendable
-    fulfillments. Conditions can individually selected by passing one or more
-    CONDITION_ID, as a JSON list. Otherwise, all conditions are converted.
+    fulfillments. Conditions can individually be selected by passing one or
+    more CONDITION_ID, as a JSON list. Otherwise, all conditions are converted.
     """
     transaction = Transaction.from_dict(transaction)
     inputs = transaction.to_inputs(condition_id)
