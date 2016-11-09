@@ -67,6 +67,7 @@ coverage: ## check code coverage quickly with the default Python
 docs: ## generate Sphinx HTML documentation, including API docs
 	rm -f docs/bdb_transaction_cli.rst
 	rm -f docs/modules.rst
+	RECORD_EXAMPLES=1 python -m unittest -v tests.test_bdb_transaction_cli.TestBdbCli
 	sphinx-apidoc -o docs/ bdb_transaction_cli
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html

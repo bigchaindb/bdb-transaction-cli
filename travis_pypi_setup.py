@@ -21,7 +21,7 @@ except:
     from urllib.request import urlopen
 
 
-GITHUB_REPO = 'wrigley/bdb_transaction_cli'
+GITHUB_REPO = 'bigchaindb/bdb-transaction-cli'
 TRAVIS_CONFIG_FILE = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), '.travis.yml')
 

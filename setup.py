@@ -11,29 +11,42 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'Click>=6.0',
-    # TODO: put package requirements here
+    'bigchaindb-common>=0.0.3',
+    'graphviz'
+]
+
+dev_requirements = [
+    'pip==8.1.2',
+    'bumpversion==0.5.3',
+    'wheel==0.29.0',
+    'watchdog==0.8.3',
+    'flake8==2.6.0',
+    'tox==2.3.1',
+    'coverage==4.1',
+    'Sphinx==1.4.8',
+    'cryptography==1.4',
+    'PyYAML==3.11',
+    'pytest==2.9.2',
+    'ipdb',
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
 ]
 
 setup(
     name='bdb_transaction_cli',
     version='0.1.0',
-    description="A minimal command line tool for create and sign BigchainDB transactions.",
+    description=("A minimal command line tool for creating and signing "
+                 "BigchainDB transactions."),
     long_description=readme + '\n\n' + history,
     author="BigchainDB GmbH",
     author_email='dev@bigchaindb.com',
-    url='https://github.com/wrigley/bdb_transaction_cli',
-    packages=[
-        'bdb_transaction_cli',
-    ],
-    package_dir={'bdb_transaction_cli':
-                 'bdb_transaction_cli'},
+    url='https://github.com/bigchaindb/bdb-transaction-cli',
+    packages=['bdb_transaction_cli'],
+    package_dir={'bdb_transaction_cli': 'bdb_transaction_cli'},
     entry_points={
         'console_scripts': [
-            'bdb_transaction_cli=bdb_transaction_cli.cli:main'
+            'bdb=bdb_transaction_cli.__main__:main'
         ]
     },
     include_package_data=True,
@@ -55,5 +68,8 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     test_suite='tests',
-    tests_require=test_requirements
+    extras_require={
+        'test': test_requirements,
+        'dev': dev_requirements + test_requirements
+    },
 )
