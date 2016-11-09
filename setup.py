@@ -11,7 +11,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'Click>=6.0',
-    'bigchaindb-common>=0.0.3',
+    'bigchaindb==0.7.0',
     'graphviz'
 ]
 

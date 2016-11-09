@@ -1,8 +1,8 @@
 import json
 
 import click
-from bigchaindb_common.crypto import generate_key_pair
-from bigchaindb_common.transaction import Transaction, \
+from bigchaindb.common.crypto import generate_key_pair
+from bigchaindb.common.transaction import Transaction, \
     Condition, Fulfillment, Metadata, Asset, Ed25519Fulfillment
 
 from bdb_transaction_cli.utils import json_argument, json_option, listify

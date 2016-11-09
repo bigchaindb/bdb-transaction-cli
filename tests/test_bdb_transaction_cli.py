@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import patch
 
 import pytest
-from bigchaindb_common.exceptions import KeypairMismatchException
+from bigchaindb.common.exceptions import KeypairMismatchException
 from click.testing import CliRunner
 
 from bdb_transaction_cli import cli
@@ -133,8 +133,8 @@ TX_TRANSFER = {
 RECORD_EXAMPLES = 'RECORD_EXAMPLES' in os.environ
 
 
-@patch('bigchaindb_common.transaction.gen_timestamp', lambda: 42)
-@patch('bigchaindb_common.transaction.Asset.to_hash', lambda self: ASSET['id'])
+@patch('bigchaindb.common.transaction.gen_timestamp', lambda: 42)
+@patch('bigchaindb.common.transaction.Asset.to_hash', lambda self: ASSET['id'])
 @patch('bdb_transaction_cli.cli.generate_key_pair', lambda: ('b', 'a'))
 class TestBdbCli(unittest.TestCase):
     @classmethod
