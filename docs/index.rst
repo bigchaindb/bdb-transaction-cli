@@ -1,7 +1,12 @@
 Welcome to bdb-transaction-cli's documentation!
 ===============================================
 
-Contents:
+.. include:: ../README.rst
+   :start-line: 4
+
+
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
