@@ -11,8 +11,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'Click>=6.0',
-    'bigchaindb-common>=0.0.3',
-    'graphviz'
+    'bigchaindb>=0.7.0',
 ]
 
 dev_requirements = [
@@ -28,6 +27,7 @@ dev_requirements = [
     'PyYAML==3.11',
     'pytest==2.9.2',
     'ipdb',
+    'graphviz'
 ]
 
 test_requirements = [
