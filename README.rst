@@ -2,7 +2,7 @@
 bdb-transaction-cli
 ===============================
 
-A minimal command line tool for create and sign BigchainDB transactions.
+A minimal command line tool to create and sign BigchainDB transactions.
 
 Installation
 ------------
