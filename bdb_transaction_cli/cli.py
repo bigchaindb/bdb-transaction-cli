@@ -30,15 +30,17 @@ def generate_keys(name):
 
 
 @main.command()
+@click.option('--amount', required=False, default=1,
+              help="Amount of the asset to output")
 @click.argument('owner_after', required=True, nargs=-1)
-def generate_condition(owner_after):
+def generate_condition(amount, owner_after):
     """
     Generate cryptoconditions from keys.
 
     Generates a Ed25119 condition from a OWNER_AFTER or a ThresholdSha256
     Condition from more than one OWNER_AFTER.
     """
-    condition = Condition.generate(list(owner_after))
+    condition = Condition.generate(list(owner_after), amount=amount)
     click.echo(json.dumps(condition.to_dict()))
 
 
