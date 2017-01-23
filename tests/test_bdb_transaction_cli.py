@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import copy
 import json
 import pdb
 import os
@@ -38,9 +37,6 @@ OUTPUT2 = {
     'public_keys': [PUB2]
 }
 
-# TODO: remove
-OUTPUT2_WITH_ID = copy.copy(OUTPUT2)
-
 
 ASSET = {
     "id": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507",
@@ -50,7 +46,7 @@ ASSET = {
 
 TX_CREATE = {
     'id': 'b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507',
-    'outputs': [OUTPUT2_WITH_ID],
+    'outputs': [OUTPUT2],
     'metadata': None,
     "asset": ASSET,
     'inputs': [
@@ -88,7 +84,7 @@ INPUT2 = {
 
 TX_CREATE_SIGNED = {
     'id': 'b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507',
-    'outputs': [OUTPUT2_WITH_ID],
+    'outputs': [OUTPUT2],
     'metadata': None,
     "asset": ASSET,
     'inputs': [
@@ -216,7 +212,6 @@ class TestBdbCli(unittest.TestCase):
         assert output == 'bob_pub=a bob_priv=b'
 
     def test_sign(self):
-        self.maxDiff = None
         output = json.loads(self.invoke_method(['sign', TX_CREATE, PRIV1]))
         self.assertEqual(output, TX_CREATE_SIGNED)
 
@@ -225,7 +220,6 @@ class TestBdbCli(unittest.TestCase):
             self.invoke_method(['sign', TX_CREATE, PRIV2])
 
     def test_transfer(self):
-        self.maxDiff = None
         args = ['transfer', [INPUT2], [OUTPUT2], json.dumps(ASSET)]
         output = json.loads(self.invoke_method(args))
         self.assertEqual(output, TX_TRANSFER)
