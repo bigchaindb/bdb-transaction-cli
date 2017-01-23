@@ -8,8 +8,8 @@ import unittest
 from unittest.mock import patch
 
 import pytest
+from bigchaindb.common.transaction import Transaction
 from bigchaindb.common.exceptions import KeypairMismatchException
-from bigchaindb import version
 from click.testing import CliRunner
 
 from bdb_transaction_cli import cli
@@ -39,13 +39,13 @@ OUTPUT2 = {
 
 
 ASSET = {
-    "id": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507",
+    "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23",
     "data": None,
 }
 
 
 TX_CREATE = {
-    'id': 'b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507',
+    'id': '211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23',
     'outputs': [OUTPUT2],
     'metadata': None,
     "asset": ASSET,
@@ -63,7 +63,7 @@ TX_CREATE = {
         }
     ],
     'operation': 'CREATE',
-    'version': version.__version__
+    'version': Transaction.VERSION,
 }
 
 INPUT2 = {
@@ -83,30 +83,30 @@ INPUT2 = {
 
 
 TX_CREATE_SIGNED = {
-    'id': 'b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507',
+    'id': '211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23',
     'outputs': [OUTPUT2],
     'metadata': None,
     "asset": ASSET,
     'inputs': [
         {
-            'fulfillment': 'cf:4:HvQ3Eg9U6Crw-DFf2v36GaPYsEMLhBSSZEuXNQ6cZFhBkAoActcNJro7brIbUl9tVRl0fDjECF36GhvQaUV_HUm0si2l_Lm9li9dp1tljKqia89vuLTgfFLGfuh2BnIP',  # noqa
+            'fulfillment': 'cf:4:HvQ3Eg9U6Crw-DFf2v36GaPYsEMLhBSSZEuXNQ6cZFg_VYOJkaCa1_BPAG6N0PecTkqVjMUhGs9nsNosiizZ4wU1Kws2nKSEkoVejpLdn6KQUbKzs-5l_MiRQarJhikC',  # noqa
             'fulfills': None,
             'owners_before': [PUB1]
         }
     ],
     'operation': 'CREATE',
-    'version': version.__version__
+    'version': Transaction.VERSION,
 }
 
 
 TX_TRANSFER = {
-    "id": "9147d3d33f9a6a5122fc7211d34e463c354eec8bafdeeb2e490cb6a550624f3d",
+    "id": "b1787a51d2225c792f0be57312125e6f25181d3147674fbe2bd9f6ca0fc75fa8",
     "operation": "TRANSFER",
     "outputs": [OUTPUT2],
     "inputs": [INPUT2],
     "asset": {"id": ASSET['id'], "data": None},
     "metadata": None,
-    "version": version.__version__,
+    "version": Transaction.VERSION,
 }
 
 
@@ -115,6 +115,8 @@ RECORD_EXAMPLES = 'RECORD_EXAMPLES' in os.environ
 
 @patch('bdb_transaction_cli.cli.generate_key_pair', lambda: ('b', 'a'))
 class TestBdbCli(unittest.TestCase):
+    def setUp(self):
+        self.maxDiff = None
     @classmethod
     def setUpClass(cls):
         if RECORD_EXAMPLES:
