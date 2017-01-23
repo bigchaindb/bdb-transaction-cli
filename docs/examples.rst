@@ -101,9 +101,9 @@ get_asset
    $ TRANSACTION='{
        "asset": {
            "data": null,
-           "id": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507"
+           "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23"
        },
-       "id": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507",
+       "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23",
        "inputs": [
            {
                "fulfillment": {
@@ -139,7 +139,7 @@ get_asset
                ]
            }
        ],
-       "version": "0.9.0.dev"
+       "version": "0.9"
    }'
 
 
@@ -155,9 +155,9 @@ sign
    $ TRANSACTION='{
        "asset": {
            "data": null,
-           "id": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507"
+           "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23"
        },
-       "id": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507",
+       "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23",
        "inputs": [
            {
                "fulfillment": {
@@ -193,7 +193,7 @@ sign
                ]
            }
        ],
-       "version": "0.9.0.dev"
+       "version": "0.9"
    }'
 
 
@@ -209,9 +209,9 @@ spend
    $ TRANSACTION='{
        "asset": {
            "data": null,
-           "id": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507"
+           "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23"
        },
-       "id": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507",
+       "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23",
        "inputs": [
            {
                "fulfillment": {
@@ -247,7 +247,7 @@ spend
                ]
            }
        ],
-       "version": "0.9.0.dev"
+       "version": "0.9"
    }'
 
 
@@ -263,9 +263,9 @@ spend_with_condition_ids
    $ TRANSACTION='{
        "asset": {
            "data": null,
-           "id": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507"
+           "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23"
        },
-       "id": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507",
+       "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23",
        "inputs": [
            {
                "fulfillment": {
@@ -301,7 +301,7 @@ spend_with_condition_ids
                ]
            }
        ],
-       "version": "0.9.0.dev"
+       "version": "0.9"
    }'
 
    $ OUTPUT_ID='[
@@ -329,7 +329,7 @@ transfer
            },
            "fulfills": {
                "output": 0,
-               "txid": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507"
+               "txid": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23"
            },
            "owners_before": [
                "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
@@ -358,7 +358,7 @@ transfer
 
    $ ASSET='{
        "data": null,
-       "id": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507"
+       "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23"
    }'
 
 
