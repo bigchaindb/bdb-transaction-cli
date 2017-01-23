@@ -51,7 +51,7 @@ ASSET = {
 
 
 TX_CREATE = {
-    'id': 'db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99',
+    'id': '58aa63812a06caf9d4ea3d915b7e97ef7e554e712bbcd694d686b540201d64ad',
     'transaction': {
         'conditions': [COND2_WITH_ID],
         'metadata': None,
@@ -71,7 +71,6 @@ TX_CREATE = {
             }
         ],
         'operation': 'CREATE',
-        'timestamp': 42
     },
     'version': 1
 }
@@ -96,7 +95,7 @@ FFILL2_WITH_ID['fid'] = 0
 
 
 TX_CREATE_SIGNED = {
-    'id': 'db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99',
+    'id': '58aa63812a06caf9d4ea3d915b7e97ef7e554e712bbcd694d686b540201d64ad',
     'transaction': {
         'conditions': [COND2_WITH_ID],
         'metadata': None,
@@ -104,20 +103,19 @@ TX_CREATE_SIGNED = {
         'fulfillments': [
             {
                 'fid': 0,
-                'fulfillment': 'cf:4:HvQ3Eg9U6Crw-DFf2v36GaPYsEMLhBSSZEuXNQ6cZFhFiCQyFc_LY90Wcqoli3lvBmHctwZJQ6rlBt5tt83M32x7PNiWQ-agikVpij3i1xPI8tikeQuIdoaBzhaU-mEH',  # noqa
+                'fulfillment': 'cf:4:HvQ3Eg9U6Crw-DFf2v36GaPYsEMLhBSSZEuXNQ6cZFihsdmQ0dNUXxvzQdbybb09LEjYPsThOEX9rjjM14qQgDfKk0iSQoVrzKeB2NsekBA-TqiyET_SA7HfghWsGMsM',  # noqa
                 'input': None,
                 'owners_before': [PUB1]
             }
         ],
         'operation': 'CREATE',
-        'timestamp': 42
     },
     'version': 1
 }
 
 
 TX_TRANSFER = {
-    "id": "a86830c6685df71a882c678fe856e44f1a5afdf86483a50c746236cf4c92d050",
+    "id": "ee52155d388e5cec157038f708795cfcf683606b9697cf961da4b4c5e06ac5b1",
     "version": 1,
     "transaction": {
         "operation": "TRANSFER",
@@ -125,7 +123,6 @@ TX_TRANSFER = {
         "fulfillments": [FFILL2_WITH_ID],
         "asset": {"id": ASSET['id']},
         "metadata": None,
-        "timestamp": 42
     }
 }
 
@@ -133,7 +130,6 @@ TX_TRANSFER = {
 RECORD_EXAMPLES = 'RECORD_EXAMPLES' in os.environ
 
 
-@patch('bigchaindb.common.transaction.gen_timestamp', lambda: 42)
 @patch('bigchaindb.common.transaction.Asset.to_hash', lambda self: ASSET['id'])
 @patch('bdb_transaction_cli.cli.generate_key_pair', lambda: ('b', 'a'))
 class TestBdbCli(unittest.TestCase):
@@ -178,8 +174,6 @@ class TestBdbCli(unittest.TestCase):
 
         command = cli.main.commands[args[0]]
 
-        doc = []
-
         var_args = []
         for param, arg in zip(command.params, args[1:]):
             opt = None
@@ -206,10 +200,10 @@ class TestBdbCli(unittest.TestCase):
 
     def test_create(self):
         output = json.loads(self.invoke_method(['create', PUB1, COND2]))
-        assert output == TX_CREATE
+        self.assertEqual(output, TX_CREATE)
 
     def test_create_with_asset(self):
-        asset = {'id': 'a', 'data': {'b': 1}, 'updatable': True,
+        asset = {'id': 'a', 'data': {'b': 1}, 'updatable': False,
                  'divisible': False, 'refillable': False}
         asset_arg = '--asset=' + json.dumps(asset)
         args = ['create', PUB1, COND2, asset_arg]
@@ -238,7 +232,7 @@ class TestBdbCli(unittest.TestCase):
 
     def test_sign(self):
         output = json.loads(self.invoke_method(['sign', TX_CREATE, PRIV1]))
-        assert output == TX_CREATE_SIGNED
+        self.assertEqual(output, TX_CREATE_SIGNED)
 
     def test_sign_fails(self):
         with pytest.raises(KeypairMismatchException):

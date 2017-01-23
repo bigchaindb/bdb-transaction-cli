@@ -61,7 +61,7 @@ create_with_asset
        "divisible": false,
        "id": "a",
        "refillable": false,
-       "updatable": true
+       "updatable": false
    }'
 
 
@@ -105,7 +105,7 @@ get_asset
 .. code-block:: shell
 
    $ TRANSACTION='{
-       "id": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99",
+       "id": "58aa63812a06caf9d4ea3d915b7e97ef7e554e712bbcd694d686b540201d64ad",
        "transaction": {
            "asset": {
                "data": null,
@@ -150,8 +150,7 @@ get_asset
                }
            ],
            "metadata": null,
-           "operation": "CREATE",
-           "timestamp": 42
+           "operation": "CREATE"
        },
        "version": 1
    }'
@@ -167,7 +166,7 @@ sign
 .. code-block:: shell
 
    $ TRANSACTION='{
-       "id": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99",
+       "id": "58aa63812a06caf9d4ea3d915b7e97ef7e554e712bbcd694d686b540201d64ad",
        "transaction": {
            "asset": {
                "data": null,
@@ -212,8 +211,7 @@ sign
                }
            ],
            "metadata": null,
-           "operation": "CREATE",
-           "timestamp": 42
+           "operation": "CREATE"
        },
        "version": 1
    }'
@@ -229,7 +227,7 @@ spend
 .. code-block:: shell
 
    $ TRANSACTION='{
-       "id": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99",
+       "id": "58aa63812a06caf9d4ea3d915b7e97ef7e554e712bbcd694d686b540201d64ad",
        "transaction": {
            "asset": {
                "data": null,
@@ -274,8 +272,7 @@ spend
                }
            ],
            "metadata": null,
-           "operation": "CREATE",
-           "timestamp": 42
+           "operation": "CREATE"
        },
        "version": 1
    }'
@@ -291,7 +288,7 @@ spend_with_condition_ids
 .. code-block:: shell
 
    $ TRANSACTION='{
-       "id": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99",
+       "id": "58aa63812a06caf9d4ea3d915b7e97ef7e554e712bbcd694d686b540201d64ad",
        "transaction": {
            "asset": {
                "data": null,
@@ -336,8 +333,7 @@ spend_with_condition_ids
                }
            ],
            "metadata": null,
-           "operation": "CREATE",
-           "timestamp": 42
+           "operation": "CREATE"
        },
        "version": 1
    }'
@@ -367,7 +363,7 @@ transfer
            },
            "input": {
                "cid": 0,
-               "txid": "db3a077a24625b0c56d0e8db9cb5a75d48e62a9a2119b299603533d6eb99df99"
+               "txid": "58aa63812a06caf9d4ea3d915b7e97ef7e554e712bbcd694d686b540201d64ad"
            },
            "owners_before": [
                "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
