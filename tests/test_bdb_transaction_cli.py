@@ -10,6 +10,7 @@ from unittest.mock import patch
 
 import pytest
 from bigchaindb.common.exceptions import KeypairMismatchException
+from bigchaindb import version
 from click.testing import CliRunner
 
 from bdb_transaction_cli import cli
@@ -22,7 +23,7 @@ PUB2 = 'EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15'
 PRIV2 = 'HrQWRzMwGfLJHkQsaXMef7beMTV4M5aynK4Xm1roFq5V'
 
 
-COND2 = {
+OUTPUT2 = {
     'amount': 1,
     'condition': {
         'details': {
@@ -34,48 +35,42 @@ COND2 = {
         },
         'uri': 'cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96'
     },
-    'owners_after': [PUB2]
+    'public_keys': [PUB2]
 }
 
-COND2_WITH_ID = copy.copy(COND2)
-COND2_WITH_ID['cid'] = 0
+# TODO: remove
+OUTPUT2_WITH_ID = copy.copy(OUTPUT2)
 
 
 ASSET = {
-    "id": "cab78dc6-1cb2-4bc0-8ec2-267dedb5fa0f",
+    "id": "b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507",
     "data": None,
-    "updatable": False,
-    "divisible": False,
-    "refillable": False
 }
 
 
 TX_CREATE = {
-    'id': '58aa63812a06caf9d4ea3d915b7e97ef7e554e712bbcd694d686b540201d64ad',
-    'transaction': {
-        'conditions': [COND2_WITH_ID],
-        'metadata': None,
-        "asset": ASSET,
-        'fulfillments': [
-            {
-                'fid': 0,
-                'fulfillment': {
-                    'bitmask': 32,
-                    'public_key': PUB1,
-                    'signature': None,
-                    'type': 'fulfillment',
-                    'type_id': 4
-                },
-                'input': None,
-                'owners_before': [PUB1]
-            }
-        ],
-        'operation': 'CREATE',
-    },
-    'version': 1
+    'id': 'b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507',
+    'outputs': [OUTPUT2_WITH_ID],
+    'metadata': None,
+    "asset": ASSET,
+    'inputs': [
+        {
+            'fulfillment': {
+                'bitmask': 32,
+                'public_key': PUB1,
+                'signature': None,
+                'type': 'fulfillment',
+                'type_id': 4
+            },
+            'fulfills': None,
+            'owners_before': [PUB1]
+        }
+    ],
+    'operation': 'CREATE',
+    'version': version.__version__
 }
 
-FFILL2 = {
+INPUT2 = {
     'fulfillment': {
         'bitmask': 32,
         'public_key': PUB2,
@@ -83,54 +78,45 @@ FFILL2 = {
         'type': 'fulfillment',
         'type_id': 4
     },
-    'input': {
-        'cid': 0,
+    'fulfills': {
+        'output': 0,
         'txid': TX_CREATE['id']
     },
     'owners_before': [PUB2]
 }
 
-FFILL2_WITH_ID = copy.copy(FFILL2)
-FFILL2_WITH_ID['fid'] = 0
-
 
 TX_CREATE_SIGNED = {
-    'id': '58aa63812a06caf9d4ea3d915b7e97ef7e554e712bbcd694d686b540201d64ad',
-    'transaction': {
-        'conditions': [COND2_WITH_ID],
-        'metadata': None,
-        "asset": ASSET,
-        'fulfillments': [
-            {
-                'fid': 0,
-                'fulfillment': 'cf:4:HvQ3Eg9U6Crw-DFf2v36GaPYsEMLhBSSZEuXNQ6cZFihsdmQ0dNUXxvzQdbybb09LEjYPsThOEX9rjjM14qQgDfKk0iSQoVrzKeB2NsekBA-TqiyET_SA7HfghWsGMsM',  # noqa
-                'input': None,
-                'owners_before': [PUB1]
-            }
-        ],
-        'operation': 'CREATE',
-    },
-    'version': 1
+    'id': 'b87bcc5e5700807ec64b949e7e6f8bccc269d2c6bc3b302632b366e01bc13507',
+    'outputs': [OUTPUT2_WITH_ID],
+    'metadata': None,
+    "asset": ASSET,
+    'inputs': [
+        {
+            'fulfillment': 'cf:4:HvQ3Eg9U6Crw-DFf2v36GaPYsEMLhBSSZEuXNQ6cZFhBkAoActcNJro7brIbUl9tVRl0fDjECF36GhvQaUV_HUm0si2l_Lm9li9dp1tljKqia89vuLTgfFLGfuh2BnIP',  # noqa
+            'fulfills': None,
+            'owners_before': [PUB1]
+        }
+    ],
+    'operation': 'CREATE',
+    'version': version.__version__
 }
 
 
 TX_TRANSFER = {
-    "id": "ee52155d388e5cec157038f708795cfcf683606b9697cf961da4b4c5e06ac5b1",
-    "version": 1,
-    "transaction": {
-        "operation": "TRANSFER",
-        "conditions": [COND2_WITH_ID],
-        "fulfillments": [FFILL2_WITH_ID],
-        "asset": {"id": ASSET['id']},
-        "metadata": None,
-    }
+    "id": "9147d3d33f9a6a5122fc7211d34e463c354eec8bafdeeb2e490cb6a550624f3d",
+    "operation": "TRANSFER",
+    "outputs": [OUTPUT2],
+    "inputs": [INPUT2],
+    "asset": {"id": ASSET['id'], "data": None},
+    "metadata": None,
+    "version": version.__version__,
 }
 
 
 RECORD_EXAMPLES = 'RECORD_EXAMPLES' in os.environ
 
 
-@patch('bigchaindb.common.transaction.Asset.to_hash', lambda self: ASSET['id'])
 @patch('bdb_transaction_cli.cli.generate_key_pair', lambda: ('b', 'a'))
 class TestBdbCli(unittest.TestCase):
     @classmethod
@@ -199,28 +185,27 @@ class TestBdbCli(unittest.TestCase):
         assert output.startswith('Usage:')
 
     def test_create(self):
-        output = json.loads(self.invoke_method(['create', PUB1, COND2]))
+        output = json.loads(self.invoke_method(['create', PUB1, OUTPUT2]))
         self.assertEqual(output, TX_CREATE)
 
     def test_create_with_asset(self):
-        asset = {'id': 'a', 'data': {'b': 1}, 'updatable': False,
-                 'divisible': False, 'refillable': False}
-        asset_arg = '--asset=' + json.dumps(asset)
-        args = ['create', PUB1, COND2, asset_arg]
+        asset_data = {'b': 1}
+        asset_arg = '--asset-data=' + json.dumps(asset_data)
+        args = ['create', PUB1, OUTPUT2, asset_arg]
         output = json.loads(self.invoke_method(args))
-        assert output['transaction']['asset'] == asset
+        self.assertEqual(output['asset']['data'], asset_data)
 
-    def test_generate_condition(self):
-        output = json.loads(self.invoke_method(['generate_condition', PUB2]))
-        assert output == COND2
+    def test_generate_output(self):
+        output = json.loads(self.invoke_method(['generate_output', PUB2]))
+        assert output == OUTPUT2
 
     def test_spend(self):
         output = json.loads(self.invoke_method(['spend', TX_CREATE]))
-        assert output == [FFILL2]
+        assert output == [INPUT2]
 
     def test_spend_with_condition_ids(self):
         output = json.loads(self.invoke_method(['spend', TX_CREATE, '[0]']))
-        assert output == [FFILL2]
+        assert output == [INPUT2]
 
     def test_generate_keys(self):
         output = self.invoke_method(['generate_keys']).rstrip()
@@ -231,6 +216,7 @@ class TestBdbCli(unittest.TestCase):
         assert output == 'bob_pub=a bob_priv=b'
 
     def test_sign(self):
+        self.maxDiff = None
         output = json.loads(self.invoke_method(['sign', TX_CREATE, PRIV1]))
         self.assertEqual(output, TX_CREATE_SIGNED)
 
@@ -239,9 +225,10 @@ class TestBdbCli(unittest.TestCase):
             self.invoke_method(['sign', TX_CREATE, PRIV2])
 
     def test_transfer(self):
-        args = ['transfer', [FFILL2], COND2, '{}']
+        self.maxDiff = None
+        args = ['transfer', [INPUT2], [OUTPUT2], json.dumps(ASSET)]
         output = json.loads(self.invoke_method(args))
-        assert output == TX_TRANSFER
+        self.assertEqual(output, TX_TRANSFER)
 
     def test_get_asset(self):
         output = json.loads(self.invoke_method(['get_asset', TX_CREATE]))
