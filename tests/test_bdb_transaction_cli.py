@@ -39,8 +39,8 @@ OUTPUT2 = {
 
 
 ASSET = {
-    "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23",
-    "data": None,
+    'id': '211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23',
+    'data': None,
 }
 
 
@@ -48,7 +48,7 @@ TX_CREATE = {
     'id': '211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23',
     'outputs': [OUTPUT2],
     'metadata': None,
-    "asset": ASSET,
+    'asset': ASSET,
     'inputs': [
         {
             'fulfillment': {
@@ -86,7 +86,7 @@ TX_CREATE_SIGNED = {
     'id': '211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23',
     'outputs': [OUTPUT2],
     'metadata': None,
-    "asset": ASSET,
+    'asset': ASSET,
     'inputs': [
         {
             'fulfillment': 'cf:4:HvQ3Eg9U6Crw-DFf2v36GaPYsEMLhBSSZEuXNQ6cZFg_VYOJkaCa1_BPAG6N0PecTkqVjMUhGs9nsNosiizZ4wU1Kws2nKSEkoVejpLdn6KQUbKzs-5l_MiRQarJhikC',  # noqa
@@ -100,13 +100,13 @@ TX_CREATE_SIGNED = {
 
 
 TX_TRANSFER = {
-    "id": "b1787a51d2225c792f0be57312125e6f25181d3147674fbe2bd9f6ca0fc75fa8",
-    "operation": "TRANSFER",
-    "outputs": [OUTPUT2],
-    "inputs": [INPUT2],
-    "asset": {"id": ASSET['id'], "data": None},
-    "metadata": None,
-    "version": Transaction.VERSION,
+    'id': 'b1787a51d2225c792f0be57312125e6f25181d3147674fbe2bd9f6ca0fc75fa8',
+    'operation': 'TRANSFER',
+    'outputs': [OUTPUT2],
+    'inputs': [INPUT2],
+    'asset': {'id': ASSET['id'], 'data': None},
+    'metadata': None,
+    'version': Transaction.VERSION,
 }
 
 
@@ -121,10 +121,10 @@ class TestBdbCli(unittest.TestCase):
     def setUpClass(cls):
         if RECORD_EXAMPLES:
             cls.doc = open('docs/examples.rst', 'w')
-            cls.doc.write("Invocation Examples\n")
-            cls.doc.write("===================\n\n")
-            print("These are examples of how to invoke the bdb command, "
-                  "auto-generated from the tests.", file=cls.doc)
+            cls.doc.write('Invocation Examples\n')
+            cls.doc.write('===================\n\n')
+            print('These are examples of how to invoke the bdb command, '
+                  'auto-generated from the tests.', file=cls.doc)
 
     def invoke_method(self, args):
         args = [json.dumps(arg) if isinstance(arg, (dict, list))
@@ -169,7 +169,7 @@ class TestBdbCli(unittest.TestCase):
                 body = body.replace('\n', '\n   ')
                 stmt = "   $ {}='{}'\n\n".format(param.name.upper(), body)
                 self.doc.write(stmt)
-                arg = "\"${}\"".format(param.name.upper())
+                arg = '"${}"'.format(param.name.upper())
 
             if opt:
                 var_args.insert(0, opt + '=' + arg)

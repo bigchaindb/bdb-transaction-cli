@@ -14,8 +14,8 @@ def main():
 
 @main.command()
 @click.option('--name', required=False, help=(
-    "Print the keys as shell variables,                             eg: "
-    "`export $(bdb generate_keys --name=bob)`"))
+    'Print the keys as shell variables,                             eg: '
+    '`export $(bdb generate_keys --name=bob)`'))
 def generate_keys(name):
     """
     Generate a random Ed25519 key pair.
@@ -30,7 +30,7 @@ def generate_keys(name):
 
 @main.command()
 @click.option('--amount', required=False, default=1,
-              help="Amount of the asset to output")
+              help='Amount of the asset to output')
 @click.argument('owner_after', required=True, nargs=-1)
 def generate_output(amount, owner_after):
     """
@@ -54,10 +54,10 @@ def create(owner_before, outputs, metadata, asset_data):
 
     The CREATE transaction creates a new asset.
     """
-    input = Input.generate([owner_before])
+    input_ = Input.generate([owner_before])
     outputs = [Output.from_dict(c) for c in listify(outputs)]
-    tx = Transaction(Transaction.CREATE, {"data": asset_data},
-                     [input], outputs, metadata)
+    tx = Transaction(Transaction.CREATE, {'data': asset_data},
+                     [input_], outputs, metadata)
     tx = Transaction._to_str(tx.to_dict())
     click.echo(tx)
 
@@ -124,4 +124,4 @@ def get_asset(transaction):
     Return the asset from a transaction for the purpose of providing it as an
     input to `transfer`.
     """
-    click.echo(json.dumps({"id": transaction['asset']['id']}))
+    click.echo(json.dumps({'id': transaction['asset']['id']}))
