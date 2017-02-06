@@ -124,4 +124,8 @@ def get_asset(transaction):
     Return the asset from a transaction for the purpose of providing it as an
     input to `transfer`.
     """
-    click.echo(json.dumps({'id': transaction['asset']['id']}))
+    try:
+        asset_id = transaction['asset']['id']
+    except KeyError:
+        asset_id = transaction['id']
+    click.echo(json.dumps({'id': asset_id}))

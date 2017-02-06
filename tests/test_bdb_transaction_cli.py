@@ -39,7 +39,6 @@ OUTPUT2 = {
 
 
 ASSET = {
-    'id': '211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23',
     'data': None,
 }
 
@@ -100,11 +99,11 @@ TX_CREATE_SIGNED = {
 
 
 TX_TRANSFER = {
-    'id': 'b1787a51d2225c792f0be57312125e6f25181d3147674fbe2bd9f6ca0fc75fa8',
+    'id': '7d59c009ecead6b851007d6c1259f22e7feba713108c8d8ffca60637083199bc',
     'operation': 'TRANSFER',
     'outputs': [OUTPUT2],
     'inputs': [INPUT2],
-    'asset': {'id': ASSET['id'], 'data': None},
+    'asset': {'id': TX_CREATE['id']},
     'metadata': None,
     'version': Transaction.VERSION,
 }
@@ -215,6 +214,7 @@ class TestBdbCli(unittest.TestCase):
 
     def test_sign(self):
         output = json.loads(self.invoke_method(['sign', TX_CREATE, PRIV1]))
+
         self.assertEqual(output, TX_CREATE_SIGNED)
 
     def test_sign_fails(self):
@@ -222,13 +222,14 @@ class TestBdbCli(unittest.TestCase):
             self.invoke_method(['sign', TX_CREATE, PRIV2])
 
     def test_transfer(self):
-        args = ['transfer', [INPUT2], [OUTPUT2], json.dumps(ASSET)]
+        asset = json.loads(self.invoke_method(['get_asset', TX_CREATE]))
+        args = ['transfer', [INPUT2], [OUTPUT2], json.dumps(asset)]
         output = json.loads(self.invoke_method(args))
         self.assertEqual(output, TX_TRANSFER)
 
     def test_get_asset(self):
         output = json.loads(self.invoke_method(['get_asset', TX_CREATE]))
-        assert output == {'id': ASSET['id']}
+        assert output == {'id': TX_CREATE['id']}
 
 
 
