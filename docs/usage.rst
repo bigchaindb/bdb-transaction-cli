@@ -34,7 +34,7 @@ asset.
 	{ // Inputs (non processes)
 	    node [shape=record]
 	    node [color=black]
-	    condition
+	    output
 	    pubkey_alice
 	    privkey_alice
             asset [style=dashed]
@@ -44,9 +44,9 @@ asset.
 	}
 	
 	{
-	    pubkey_alice -> generate_condition
-	    generate_condition -> condition
-	    condition -> create
+	    pubkey_alice -> generate_output
+	    generate_output -> output
+	    output -> create
 	    pubkey_alice -> create
             asset -> create
             metadata -> create
@@ -79,7 +79,7 @@ asset.
 	{ // Inputs (non processes)
 	    node [shape=record]
 	    node [color=black]
-	    condition
+	    output
 	    pubkey_alice [fontcolor=grey]
 	    privkey_alice
 	    pubkey_bob
@@ -87,7 +87,7 @@ asset.
 	    CREATE_transaction
 	    TRANSFER_transaction
 	    signed_transaction
-	    fulfillment
+	    input
 	    asset
 	}
 	
@@ -96,18 +96,18 @@ asset.
 	    generate_keys -> privkey_alice
 	    generate_keys -> pubkey_bob
 	    generate_keys -> privkey_bob
-	    pubkey_bob -> generate_condition
-	    generate_condition -> condition
+	    pubkey_bob -> generate_output
+	    generate_output -> output
 	    privkey_alice -> sign
 	    CREATE_transaction -> spend
             CREATE_transaction -> get_asset
             get_asset -> asset
-	    spend -> fulfillment
+	    spend -> input
 	    TRANSFER_transaction -> sign
 	    sign -> signed_transaction
 	    asset -> transfer
-	    fulfillment -> transfer
-	    condition -> transfer
+	    input -> transfer
+	    output -> transfer
 	    transfer -> TRANSFER_transaction
 	}
 
