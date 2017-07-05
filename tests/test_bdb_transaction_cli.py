@@ -23,16 +23,13 @@ PRIV2 = 'HrQWRzMwGfLJHkQsaXMef7beMTV4M5aynK4Xm1roFq5V'
 
 
 OUTPUT2 = {
-    'amount': 1,
+    'amount': '1',
     'condition': {
         'details': {
-            'bitmask': 32,
             'public_key': PUB2,
-            'signature': None,
-            'type': 'fulfillment',
-            'type_id': 4
+            'type': 'ed25519-sha-256',
         },
-        'uri': 'cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96'
+        'uri': 'ni:///sha-256;bG2FpGKXhmf46-GOh0FtHAI5OoAvBSvg40790yM-Iik?fpt=ed25519-sha-256&cost=131072'
     },
     'public_keys': [PUB2]
 }
@@ -44,18 +41,15 @@ ASSET = {
 
 
 TX_CREATE = {
-    'id': '211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23',
+    'id': 'f49cad37a04d7179b1181b189108eba71f7a17dae51e97c3efe7dc94d635cea0',
     'outputs': [OUTPUT2],
     'metadata': None,
     'asset': ASSET,
     'inputs': [
         {
             'fulfillment': {
-                'bitmask': 32,
                 'public_key': PUB1,
-                'signature': None,
-                'type': 'fulfillment',
-                'type_id': 4
+                'type': 'ed25519-sha-256',
             },
             'fulfills': None,
             'owners_before': [PUB1]
@@ -67,28 +61,25 @@ TX_CREATE = {
 
 INPUT2 = {
     'fulfillment': {
-        'bitmask': 32,
         'public_key': PUB2,
-        'signature': None,
-        'type': 'fulfillment',
-        'type_id': 4
+        'type': 'ed25519-sha-256',
     },
     'fulfills': {
-        'output': 0,
-        'txid': TX_CREATE['id']
+        'output_index': 0,
+        'transaction_id': TX_CREATE['id']
     },
     'owners_before': [PUB2]
 }
 
 
 TX_CREATE_SIGNED = {
-    'id': '211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23',
+    'id': 'f49cad37a04d7179b1181b189108eba71f7a17dae51e97c3efe7dc94d635cea0',
     'outputs': [OUTPUT2],
     'metadata': None,
     'asset': ASSET,
     'inputs': [
         {
-            'fulfillment': 'cf:4:HvQ3Eg9U6Crw-DFf2v36GaPYsEMLhBSSZEuXNQ6cZFg_VYOJkaCa1_BPAG6N0PecTkqVjMUhGs9nsNosiizZ4wU1Kws2nKSEkoVejpLdn6KQUbKzs-5l_MiRQarJhikC',  # noqa
+            'fulfillment': 'pGSAIB70NxIPVOgq8PgxX9r9-hmj2LBDC4QUkmRLlzUOnGRYgUC6sct6F5fdDATwbhn4YOPilNNyRcyQiqH-f9tNnqxMemwPAW_Wcd7ej7znQQa58IAVFHSFuYdWNktBOypumW4O',  # noqa
             'fulfills': None,
             'owners_before': [PUB1]
         }
@@ -99,7 +90,7 @@ TX_CREATE_SIGNED = {
 
 
 TX_TRANSFER = {
-    'id': '7d59c009ecead6b851007d6c1259f22e7feba713108c8d8ffca60637083199bc',
+    'id': 'e52b682a508a8268fd5b3af5dd8a81fa04c6edcadfff5068a267222c5b1dc5cc',
     'operation': 'TRANSFER',
     'outputs': [OUTPUT2],
     'inputs': [INPUT2],
@@ -183,7 +174,7 @@ class TestBdbCli(unittest.TestCase):
 
     def test_create(self):
         output = json.loads(self.invoke_method(['create', PUB1, OUTPUT2]))
-        self.assertEqual(output, TX_CREATE)
+        self.assertEqual(TX_CREATE, output)
 
     def test_create_with_asset(self):
         asset_data = {'b': 1}
@@ -215,7 +206,7 @@ class TestBdbCli(unittest.TestCase):
     def test_sign(self):
         output = json.loads(self.invoke_method(['sign', TX_CREATE, PRIV1]))
 
-        self.assertEqual(output, TX_CREATE_SIGNED)
+        self.assertEqual(TX_CREATE_SIGNED, output)
 
     def test_sign_fails(self):
         with pytest.raises(KeypairMismatchException):
@@ -225,7 +216,7 @@ class TestBdbCli(unittest.TestCase):
         asset = json.loads(self.invoke_method(['get_asset', TX_CREATE]))
         args = ['transfer', [INPUT2], [OUTPUT2], json.dumps(asset)]
         output = json.loads(self.invoke_method(args))
-        self.assertEqual(output, TX_TRANSFER)
+        self.assertEqual(TX_TRANSFER, output)
 
     def test_get_asset(self):
         output = json.loads(self.invoke_method(['get_asset', TX_CREATE]))

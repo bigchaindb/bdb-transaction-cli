@@ -11,16 +11,13 @@ create
 .. code-block:: shell
 
    $ OUTPUTS='{
-       "amount": 1,
+       "amount": "1",
        "condition": {
            "details": {
-               "bitmask": 32,
                "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-               "signature": null,
-               "type": "fulfillment",
-               "type_id": 4
+               "type": "ed25519-sha-256"
            },
-           "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+           "uri": "ni:///sha-256;bG2FpGKXhmf46-GOh0FtHAI5OoAvBSvg40790yM-Iik?fpt=ed25519-sha-256&cost=131072"
        },
        "public_keys": [
            "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
@@ -38,16 +35,13 @@ create_with_asset
 .. code-block:: shell
 
    $ OUTPUTS='{
-       "amount": 1,
+       "amount": "1",
        "condition": {
            "details": {
-               "bitmask": 32,
                "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-               "signature": null,
-               "type": "fulfillment",
-               "type_id": 4
+               "type": "ed25519-sha-256"
            },
-           "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+           "uri": "ni:///sha-256;bG2FpGKXhmf46-GOh0FtHAI5OoAvBSvg40790yM-Iik?fpt=ed25519-sha-256&cost=131072"
        },
        "public_keys": [
            "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
@@ -100,18 +94,14 @@ get_asset
 
    $ TRANSACTION='{
        "asset": {
-           "data": null,
-           "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23"
+           "data": null
        },
-       "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23",
+       "id": "f49cad37a04d7179b1181b189108eba71f7a17dae51e97c3efe7dc94d635cea0",
        "inputs": [
            {
                "fulfillment": {
-                   "bitmask": 32,
                    "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
-                   "signature": null,
-                   "type": "fulfillment",
-                   "type_id": 4
+                   "type": "ed25519-sha-256"
                },
                "fulfills": null,
                "owners_before": [
@@ -123,23 +113,20 @@ get_asset
        "operation": "CREATE",
        "outputs": [
            {
-               "amount": 1,
+               "amount": "1",
                "condition": {
                    "details": {
-                       "bitmask": 32,
                        "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-                       "signature": null,
-                       "type": "fulfillment",
-                       "type_id": 4
+                       "type": "ed25519-sha-256"
                    },
-                   "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+                   "uri": "ni:///sha-256;bG2FpGKXhmf46-GOh0FtHAI5OoAvBSvg40790yM-Iik?fpt=ed25519-sha-256&cost=131072"
                },
                "public_keys": [
                    "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
                ]
            }
        ],
-       "version": "0.9"
+       "version": "1.0"
    }'
 
 
@@ -154,18 +141,14 @@ sign
 
    $ TRANSACTION='{
        "asset": {
-           "data": null,
-           "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23"
+           "data": null
        },
-       "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23",
+       "id": "f49cad37a04d7179b1181b189108eba71f7a17dae51e97c3efe7dc94d635cea0",
        "inputs": [
            {
                "fulfillment": {
-                   "bitmask": 32,
                    "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
-                   "signature": null,
-                   "type": "fulfillment",
-                   "type_id": 4
+                   "type": "ed25519-sha-256"
                },
                "fulfills": null,
                "owners_before": [
@@ -177,23 +160,20 @@ sign
        "operation": "CREATE",
        "outputs": [
            {
-               "amount": 1,
+               "amount": "1",
                "condition": {
                    "details": {
-                       "bitmask": 32,
                        "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-                       "signature": null,
-                       "type": "fulfillment",
-                       "type_id": 4
+                       "type": "ed25519-sha-256"
                    },
-                   "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+                   "uri": "ni:///sha-256;bG2FpGKXhmf46-GOh0FtHAI5OoAvBSvg40790yM-Iik?fpt=ed25519-sha-256&cost=131072"
                },
                "public_keys": [
                    "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
                ]
            }
        ],
-       "version": "0.9"
+       "version": "1.0"
    }'
 
 
@@ -208,18 +188,14 @@ spend
 
    $ TRANSACTION='{
        "asset": {
-           "data": null,
-           "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23"
+           "data": null
        },
-       "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23",
+       "id": "f49cad37a04d7179b1181b189108eba71f7a17dae51e97c3efe7dc94d635cea0",
        "inputs": [
            {
                "fulfillment": {
-                   "bitmask": 32,
                    "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
-                   "signature": null,
-                   "type": "fulfillment",
-                   "type_id": 4
+                   "type": "ed25519-sha-256"
                },
                "fulfills": null,
                "owners_before": [
@@ -231,23 +207,20 @@ spend
        "operation": "CREATE",
        "outputs": [
            {
-               "amount": 1,
+               "amount": "1",
                "condition": {
                    "details": {
-                       "bitmask": 32,
                        "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-                       "signature": null,
-                       "type": "fulfillment",
-                       "type_id": 4
+                       "type": "ed25519-sha-256"
                    },
-                   "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+                   "uri": "ni:///sha-256;bG2FpGKXhmf46-GOh0FtHAI5OoAvBSvg40790yM-Iik?fpt=ed25519-sha-256&cost=131072"
                },
                "public_keys": [
                    "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
                ]
            }
        ],
-       "version": "0.9"
+       "version": "1.0"
    }'
 
 
@@ -262,18 +235,14 @@ spend_with_condition_ids
 
    $ TRANSACTION='{
        "asset": {
-           "data": null,
-           "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23"
+           "data": null
        },
-       "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23",
+       "id": "f49cad37a04d7179b1181b189108eba71f7a17dae51e97c3efe7dc94d635cea0",
        "inputs": [
            {
                "fulfillment": {
-                   "bitmask": 32,
                    "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
-                   "signature": null,
-                   "type": "fulfillment",
-                   "type_id": 4
+                   "type": "ed25519-sha-256"
                },
                "fulfills": null,
                "owners_before": [
@@ -285,23 +254,20 @@ spend_with_condition_ids
        "operation": "CREATE",
        "outputs": [
            {
-               "amount": 1,
+               "amount": "1",
                "condition": {
                    "details": {
-                       "bitmask": 32,
                        "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-                       "signature": null,
-                       "type": "fulfillment",
-                       "type_id": 4
+                       "type": "ed25519-sha-256"
                    },
-                   "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+                   "uri": "ni:///sha-256;bG2FpGKXhmf46-GOh0FtHAI5OoAvBSvg40790yM-Iik?fpt=ed25519-sha-256&cost=131072"
                },
                "public_keys": [
                    "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
                ]
            }
        ],
-       "version": "0.9"
+       "version": "1.0"
    }'
 
    $ OUTPUT_ID='[
@@ -318,18 +284,62 @@ transfer
 
 .. code-block:: shell
 
+   $ TRANSACTION='{
+       "asset": {
+           "data": null
+       },
+       "id": "f49cad37a04d7179b1181b189108eba71f7a17dae51e97c3efe7dc94d635cea0",
+       "inputs": [
+           {
+               "fulfillment": {
+                   "public_key": "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF",
+                   "type": "ed25519-sha-256"
+               },
+               "fulfills": null,
+               "owners_before": [
+                   "35qDXhZTUvna23NLc1hMfmrgPniBwPgNjko1VfQuD3vF"
+               ]
+           }
+       ],
+       "metadata": null,
+       "operation": "CREATE",
+       "outputs": [
+           {
+               "amount": "1",
+               "condition": {
+                   "details": {
+                       "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
+                       "type": "ed25519-sha-256"
+                   },
+                   "uri": "ni:///sha-256;bG2FpGKXhmf46-GOh0FtHAI5OoAvBSvg40790yM-Iik?fpt=ed25519-sha-256&cost=131072"
+               },
+               "public_keys": [
+                   "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
+               ]
+           }
+       ],
+       "version": "1.0"
+   }'
+
+
+   $ bdb get_asset "$TRANSACTION"
+
+
+transfer
+--------
+
+
+.. code-block:: shell
+
    $ INPUTS='[
        {
            "fulfillment": {
-               "bitmask": 32,
                "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-               "signature": null,
-               "type": "fulfillment",
-               "type_id": 4
+               "type": "ed25519-sha-256"
            },
            "fulfills": {
-               "output": 0,
-               "txid": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23"
+               "output_index": 0,
+               "transaction_id": "f49cad37a04d7179b1181b189108eba71f7a17dae51e97c3efe7dc94d635cea0"
            },
            "owners_before": [
                "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
@@ -339,16 +349,13 @@ transfer
 
    $ OUTPUTS='[
        {
-           "amount": 1,
+           "amount": "1",
            "condition": {
                "details": {
-                   "bitmask": 32,
                    "public_key": "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15",
-                   "signature": null,
-                   "type": "fulfillment",
-                   "type_id": 4
+                   "type": "ed25519-sha-256"
                },
-               "uri": "cc:4:20:zL3F_XLRs_snrfmdqSFPqEcu-bu1xF6636oSYpNWvIw:96"
+               "uri": "ni:///sha-256;bG2FpGKXhmf46-GOh0FtHAI5OoAvBSvg40790yM-Iik?fpt=ed25519-sha-256&cost=131072"
            },
            "public_keys": [
                "EnE1QD5kBY9Zrsp2Ejsp7W7ZMFAcH75SqR9wz6WrUR15"
@@ -357,8 +364,7 @@ transfer
    ]'
 
    $ ASSET='{
-       "data": null,
-       "id": "211230736e0b7d08af98d222c01170a45b0e3aebb10a40f07751512ed171eb23"
+       "id": "f49cad37a04d7179b1181b189108eba71f7a17dae51e97c3efe7dc94d635cea0"
    }'
 
 

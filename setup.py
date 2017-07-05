@@ -11,7 +11,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'Click>=6.0',
-    'bigchaindb~=0.9.0',
+    'bigchaindb~=1.0.0',
 ]
 
 dev_requirements = [
