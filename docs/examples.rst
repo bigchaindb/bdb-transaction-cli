@@ -6,7 +6,20 @@ These are examples of how to invoke the bdb command, auto-generated from the tes
 
 create
 ------
+**Usage**
 
+.. code-block:: shell
+
+   Usage: bdb create [OPTIONS] OWNER_BEFORE OUTPUTS
+
+     Generate a CREATE transaction.
+
+     The CREATE transaction creates a new asset.
+
+   Options:
+     --metadata JSON
+     --asset-data JSON
+     --help             Show this message and exit.
 
 .. code-block:: shell
 
@@ -58,8 +71,18 @@ create_with_asset
 
 generate_keys
 -------------
+**Usage**
 
+.. code-block:: shell
 
+   Usage: bdb generate_keys [OPTIONS]
+
+     Generate a random Ed25519 key pair.
+
+   Options:
+     --name TEXT  Print the keys as shell variables,
+                  eg: `export $(bdb generate_keys --name=bob)`
+     --help          Show this message and exit.
 .. code-block:: shell
 
 
@@ -78,7 +101,20 @@ generate_keys_with_name
 
 generate_output
 ---------------
+**Usage**
 
+.. code-block:: shell
+
+   Usage: bdb generate_output [OPTIONS] OWNER_AFTER...
+
+     Generate cryptooutputs from keys.
+
+     Generates a Ed25119 output from a OWNER_AFTER or a ThresholdSha256 Output
+     from more than one OWNER_AFTER.
+
+   Options:
+     --amount INTEGER  Amount of the asset to output
+     --help            Show this message and exit.
 
 .. code-block:: shell
 
@@ -88,7 +124,17 @@ generate_output
 
 get_asset
 ---------
+**Usage**
 
+.. code-block:: shell
+
+   Usage: bdb get_asset [OPTIONS] TRANSACTION
+
+     Return the asset from a transaction for the purpose of providing it as an
+     input to `transfer`.
+
+   Options:
+     --help  Show this message and exit.
 
 .. code-block:: shell
 
@@ -135,7 +181,21 @@ get_asset
 
 sign
 ----
+**Usage**
 
+.. code-block:: shell
+
+   Usage: bdb sign [OPTIONS] TRANSACTION PRIVATE_KEY
+
+     Signs a json transaction.
+
+     Signs TRANSACTION (json) with given PRIVATE_KEY. Only a TRANSACTION using
+     Ed25519 or ThresholdSha256 outputs can be signed.
+
+     Outputs a signed transaction.
+
+   Options:
+     --help  Show this message and exit.
 
 .. code-block:: shell
 
@@ -182,7 +242,20 @@ sign
 
 spend
 -----
+**Usage**
 
+.. code-block:: shell
+
+   Usage: bdb spend [OPTIONS] TRANSACTION [OUTPUT_ID]
+
+     Convert a transaction's outputs to inputs.
+
+     Convert outputs in TRANSACTION (json) to signable/spendable inputs.
+     Outputs can individually be selected by passing one or more CONDITION_ID,
+     as a JSON list. Otherwise, all outputs are converted.
+
+   Options:
+     --help  Show this message and exit.
 
 .. code-block:: shell
 
@@ -280,7 +353,18 @@ spend_with_condition_ids
 
 transfer
 --------
+**Usage**
 
+.. code-block:: shell
+
+   Usage: bdb transfer [OPTIONS] INPUTS OUTPUTS ASSET [METADATA]
+
+     Generate a TRANSFER transaction.
+
+     The TRANSFER transaction transfers ownership of a given asset.
+
+   Options:
+     --help  Show this message and exit.
 
 .. code-block:: shell
 
