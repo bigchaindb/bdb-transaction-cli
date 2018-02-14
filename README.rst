@@ -1,3 +1,6 @@
+**Warning: This tool is no longer being actively maintained and may not work.**
+
+
 ===============================
 bdb-transaction-cli
 ===============================
